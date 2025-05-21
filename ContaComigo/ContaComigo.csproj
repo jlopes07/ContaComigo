@@ -11,4 +11,8 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.15" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ContaComigo.Shared\ContaComigo.Shared.csproj" />
+  </ItemGroup>
+
 </Project>

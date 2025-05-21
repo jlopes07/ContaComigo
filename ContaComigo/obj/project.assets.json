@@ -454,6 +454,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v8.0",
         "dependencies": {
+          "ContaComigo.Shared": "1.0.0",
           "Microsoft.AspNetCore.Components.WebAssembly": "8.0.15"
         },
         "compile": {
@@ -461,6 +462,16 @@
         },
         "runtime": {
           "bin/placeholder/ContaComigo.Client.dll": {}
+        }
+      },
+      "ContaComigo.Shared/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "compile": {
+          "bin/placeholder/ContaComigo.Shared.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/ContaComigo.Shared.dll": {}
         }
       }
     }
@@ -1170,11 +1181,17 @@
       "type": "project",
       "path": "../ContaComigo.Client/ContaComigo.Client.csproj",
       "msbuildProject": "../ContaComigo.Client/ContaComigo.Client.csproj"
+    },
+    "ContaComigo.Shared/1.0.0": {
+      "type": "project",
+      "path": "../ContaComigo.Shared/ContaComigo.Shared.csproj",
+      "msbuildProject": "../ContaComigo.Shared/ContaComigo.Shared.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net8.0": [
       "ContaComigo.Client >= 1.0.0",
+      "ContaComigo.Shared >= 1.0.0",
       "Microsoft.AspNetCore.Components.WebAssembly.Server >= 8.0.15"
     ]
   },
@@ -1213,6 +1230,9 @@
           "projectReferences": {
             "C:\\Users\\User\\Desktop\\Projetos-treinamento\\projetos\\ContaComigo\\ContaComigo.Client\\ContaComigo.Client.csproj": {
               "projectPath": "C:\\Users\\User\\Desktop\\Projetos-treinamento\\projetos\\ContaComigo\\ContaComigo.Client\\ContaComigo.Client.csproj"
+            },
+            "C:\\Users\\User\\Desktop\\Projetos-treinamento\\projetos\\ContaComigo\\ContaComigo.Shared\\ContaComigo.Shared.csproj": {
+              "projectPath": "C:\\Users\\User\\Desktop\\Projetos-treinamento\\projetos\\ContaComigo\\ContaComigo.Shared\\ContaComigo.Shared.csproj"
             }
           }
         }
