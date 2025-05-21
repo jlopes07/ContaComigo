@@ -1,58 +1,42 @@
-﻿using System;
-using System.Collections.Generic; // Certifique-se de ter este using para IEnumerable, se usado
+﻿// ContaComigo.Shared/Models/Transacao.cs
 
-namespace ContaComigo.Shared.Models;
+using System;
+using System.ComponentModel.DataAnnotations; // Para atributos como [Required], [Range], [StringLength]
 
-public class Transacao
+namespace ContaComigo.Shared.Models
 {
-    public Guid Id { get; private set; }
-    public string Descricao { get; private set; }
-    public decimal Valor { get; private set; }
-    public DateTime Data { get; private set; }
-
-    public Transacao(string descricao, decimal valor, DateTime data)
+    public class Transacao
     {
-        // Validações básicas da entidade (se for o caso)
-        if (string.IsNullOrWhiteSpace(descricao))
+        public Guid Id { get; set; }
+
+        [Required(ErrorMessage = "A descrição é obrigatória.")]
+        [StringLength(100, ErrorMessage = "A descrição não pode exceder 100 caracteres.")]
+        public string Descricao { get; set; }
+
+        [Required(ErrorMessage = "O valor é obrigatório.")]
+        // Alterando o Range para um tipo que o Blazor entenda melhor com decimal
+        // Usando Range(0.01M, decimal.MaxValue) se o Range com double estiver causando problemas
+        // Ou, para garantir, vamos manter o double.MaxValue como limite superior, mas garantir o tipo decimal no lower bound
+        [Range(0.01, (double)20000000000000000000000000000M, ErrorMessage = "O valor deve ser positivo e válido.")] // Ajustei para um valor decimal mais alto e explícito
+        public decimal Valor { get; set; }
+
+        [Required(ErrorMessage = "A data é obrigatória.")]
+        // [DataType(DataType.Date)] // Pode ser adicionado, mas InputDate já trata isso
+        public DateTime Data { get; set; }
+
+        public Transacao()
         {
-            throw new ArgumentException("A descrição da transação não pode ser nula ou vazia.", nameof(descricao));
-        }
-        if (valor <= 0)
-        {
-            throw new ArgumentException("O valor da transação deve ser maior que zero.", nameof(valor));
+            Id = Guid.NewGuid();
+            Descricao = string.Empty;
+            Data = DateTime.Now;
         }
 
-        Id = Guid.NewGuid();
-        Descricao = descricao;
-        Valor = valor;
-        Data = data;
-    }
-
-    // Construtor privado para deserialização/ORM, inicializando propriedades não anuláveis
-    private Transacao()
-    {
-        Id = Guid.Empty;
-        Descricao = string.Empty; // Inicialização para evitar CS8618
-        Valor = 0m;
-        Data = DateTime.MinValue;
-    }
-
-    // Métodos de comportamento da entidade (ex: atualizar, mas com validação)
-    public void AtualizarDescricao(string novaDescricao)
-    {
-        if (string.IsNullOrWhiteSpace(novaDescricao))
+        public Transacao(string descricao, decimal valor, DateTime data)
         {
-            throw new ArgumentException("A descrição não pode ser nula ou vazia.", nameof(novaDescricao));
+            Id = Guid.NewGuid();
+            Descricao = descricao;
+            Valor = valor;
+            Data = data;
         }
-        Descricao = novaDescricao;
-    }
-
-    public void AtualizarValor(decimal novoValor)
-    {
-        if (novoValor <= 0)
-        {
-            throw new ArgumentException("O valor deve ser maior que zero.", nameof(novoValor));
-        }
-        Valor = novoValor;
     }
 }

@@ -1,14 +1,32 @@
 ﻿@page "/nova-transacao"
 @using ContaComigo.Client.Services
+@using System.ComponentModel.DataAnnotations
 @inject TransacaoService TransacaoService
 
 <h3>Nova Transação</h3>
 
 <EditForm Model="@transacao" OnValidSubmit="Registrar">
-    <InputText @bind-Value="transacao.Descricao" placeholder="Descrição" class="form-control" />
-    <InputNumber @bind-Value="transacao.Valor" placeholder="Valor" class="form-control" />
-    <InputDate @bind-Value="transacao.Data" class="form-control" />
-    <button type="submit">Registrar</button>
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="mb-3">
+        <label>Descrição:</label>
+        <InputText @bind-Value="transacao.Descricao" class="form-control" />
+        <ValidationMessage For="@(() => transacao.Descricao)" />
+    </div>
+
+    <div class="mb-3">
+        <label>Valor:</label>
+        <InputNumber @bind-Value="transacao.Valor" class="form-control" />
+        <ValidationMessage For="@(() => transacao.Valor)" />
+    </div>
+
+    <div class="mb-3">
+        <label>Data:</label>
+        <InputDate @bind-Value="transacao.Data" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Registrar</button>
 </EditForm>
 
 @code {
@@ -20,6 +38,6 @@
     async Task Registrar()
     {
         await TransacaoService.RegistrarTransacaoAsync(transacao);
-        transacao = new(); // limpa o formulário
+        transacao = new() { Data = DateTime.Today };
     }
 }

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ContaComigo")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f481e2d41a3956622d647d6eb2c5d4930f0f3893")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0cb02d3bc0928acc2c780cf574a3aff732dcd6d2")]
 [assembly: System.Reflection.AssemblyProductAttribute("ContaComigo")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ContaComigo")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

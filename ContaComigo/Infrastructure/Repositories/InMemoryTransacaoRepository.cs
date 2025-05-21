@@ -13,7 +13,7 @@ public class InMemoryTransacaoRepository : ITransacaoRepository
     // Usamos uma lista privada para simular o armazenamento em memória
     // Para testes de unidade isolados, cada instância do repositório pode ter sua própria lista.
     // Para um repositório em memória em cenário de aplicação real, talvez fosse estática ou Singleton.
-    private readonly List<Transacao> _transacoes = new();
+    private static List<Transacao> _transacoes = new();
 
     public void Adicionar(Transacao transacao)
     {

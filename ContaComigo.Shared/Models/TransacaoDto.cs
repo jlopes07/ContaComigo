@@ -1,11 +1,16 @@
-﻿using System; // Certifique-se de que este using existe
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
-namespace ContaComigo.Shared.Models // <<< MUDE PARA ESTE NAMESPACE
+namespace ContaComigo.Shared.Models
 {
     public class TransacaoDto
     {
-        public string Descricao { get; set; } = string.Empty;
+        [Required(ErrorMessage = "A descrição é obrigatória.")]
+        public string Descricao { get; set; }
+
+        [Range(0.01, double.MaxValue, ErrorMessage = "O valor deve ser positivo e válido.")]
         public decimal Valor { get; set; }
+
         public DateTime Data { get; set; }
     }
 }

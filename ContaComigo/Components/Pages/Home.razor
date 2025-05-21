@@ -1,7 +1,149 @@
 ﻿@page "/"
+@using ContaComigo.Shared.Models
+@inject HttpClient Http
+@using System.Linq
+@using System.Globalization // Necessário para CultureInfo
 
 <PageTitle>Home</PageTitle>
 
-<h1>Hello, world!</h1>
+<h1>Minhas Transações</h1>
 
-Welcome to your new app.
+@if (transacoes == null)
+{
+    <p><em>Carregando transações...</em></p>
+}
+else if (!transacoes.Any())
+{
+    <p>Nenhuma transação encontrada.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Descrição</th>
+                <th>Valor</th>
+                <th>Data</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var transacao in transacoes)
+            {
+                <tr>
+                    <td>@transacao.Descricao</td>
+                    <td>@transacao.Valor.ToString("C")</td> @* Formata como moeda *@
+                    <td>@transacao.Data.ToShortDateString()</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<h2 class="mt-4">Registrar Nova Transação</h2>
+
+<div class="card p-3">
+    <EditForm Model="@novaTransacao" OnValidSubmit="@HandleValidSubmit" FormName="transacaoForm">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <div class="mb-3">
+            <label for="descricao" class="form-label">Descrição:</label>
+            <InputText id="descricao" class="form-control" @bind-Value="novaTransacao.Descricao" />
+            <ValidationMessage For="@(() => novaTransacao.Descricao)" />
+        </div>
+
+        <div class="mb-3">
+            <label for="valor" class="form-label">Valor:</label>
+            @* Alterado para InputText para maior controle sobre a cultura *@
+            <InputText id="valor" class="form-control" @bind-Value="valorString" />
+            <ValidationMessage For="@(() => novaTransacao.Valor)" />
+        </div>
+
+        <div class="mb-3">
+            <label for="data" class="form-label">Data:</label>
+            @* Alterado para InputText para maior controle sobre a cultura *@
+            <InputText id="data" class="form-control" @bind-Value="dataString" placeholder="DD/MM/AAAA" />
+            <ValidationMessage For="@(() => novaTransacao.Data)" />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Registrar Transação</button>
+    </EditForm>
+</div>
+
+
+@code {
+    private List<Transacao>? transacoes;
+    private Transacao novaTransacao = new Transacao();
+
+    // Propriedades auxiliares para InputText
+    private string valorString { get; set; } = "0.00"; // Inicializa com valor padrão
+    private string dataString { get; set; } = DateTime.Now.ToString("dd/MM/yyyy"); // Inicializa com data atual formatada
+
+    protected override async Task OnInitializedAsync()
+    {
+        await CarregarTransacoes();
+    }
+
+    private async Task CarregarTransacoes()
+    {
+        try
+        {
+            transacoes = await Http.GetFromJsonAsync<List<Transacao>>("api/transacoes");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Erro ao carregar transações: {ex.Message}");
+            transacoes = new List<Transacao>();
+        }
+    }
+
+    private async Task HandleValidSubmit()
+    {
+        // **IMPORTANTE:** Converter string para decimal e DateTime ANTES de enviar
+        if (decimal.TryParse(valorString, NumberStyles.Currency, CultureInfo.InvariantCulture, out decimal parsedValor))
+        {
+            novaTransacao.Valor = parsedValor;
+        }
+        else
+        {
+            // Se a conversão falhar, adicione um erro de validação manual
+            // Ou exiba uma mensagem de erro para o usuário
+            Console.WriteLine($"Erro de conversão: Valor '{valorString}' não é um número válido.");
+            return; // Impede a submissão se o valor for inválido
+        }
+
+        if (DateTime.TryParseExact(dataString, "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime parsedData))
+        {
+            novaTransacao.Data = parsedData;
+        }
+        else
+        {
+            Console.WriteLine($"Erro de conversão: Data '{dataString}' não está no formato DD/MM/AAAA.");
+            return; // Impede a submissão se a data for inválida
+        }
+
+        try
+        {
+            var response = await Http.PostAsJsonAsync("api/transacoes", novaTransacao);
+
+            if (response.IsSuccessStatusCode)
+            {
+                await CarregarTransacoes();
+                // Resetar o modelo e as strings auxiliares para um novo formulário
+                novaTransacao = new Transacao();
+                valorString = "0.00";
+                dataString = DateTime.Now.ToString("dd/MM/yyyy");
+                Console.WriteLine("Transação adicionada com sucesso!");
+            }
+            else
+            {
+                var errorContent = await response.Content.ReadAsStringAsync();
+                Console.WriteLine($"Erro ao adicionar transação: {response.StatusCode} - {errorContent}");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Erro inesperado ao enviar transação: {ex.Message}");
+        }
+    }
+}
