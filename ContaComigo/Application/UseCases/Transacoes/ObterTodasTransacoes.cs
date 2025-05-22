@@ -2,20 +2,21 @@
 using ContaComigo.Shared.Models;
 using System.Collections.Generic;
 
-namespace ContaComigo.Application.UseCases.Transacoes;
-
-public class ObterTodasTransacoes
+namespace ContaComigo.Application.UseCases.Transacoes
 {
-    private readonly ITransacaoRepository _repository;
-
-    public ObterTodasTransacoes(ITransacaoRepository repository)
+    public class ObterTodasTransacoes
     {
-        _repository = repository;
-    }
+        private readonly ITransacaoRepository _transacaoRepository;
 
-    public IEnumerable<Transacao> Executar()
-    {
-        // Delega a responsabilidade de obter as transações ao repositório
-        return _repository.ObterTodas();
+        public ObterTodasTransacoes(ITransacaoRepository transacaoRepository)
+        {
+            _transacaoRepository = transacaoRepository;
+        }
+
+        public IEnumerable<Transacao> Executar()
+        {
+            // O nome do método no repositório foi alterado para GetAll()
+            return _transacaoRepository.GetAll();
+        }
     }
 }

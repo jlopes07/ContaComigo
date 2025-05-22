@@ -1,8 +1,7 @@
-﻿// ContaComigo/Application/UseCases/Transacoes/RegistrarTransacao.cs
-
-using ContaComigo.Application.Interfaces; // Para ITransacaoRepository
-using ContaComigo.Shared.Models; // Para Transacao
-using System; // Para ArgumentNullException
+﻿// ContaComigo.Application/UseCases/Transacoes/RegistrarTransacao.cs
+using ContaComigo.Application.Interfaces;
+using ContaComigo.Shared.Models;
+using System;
 
 namespace ContaComigo.Application.UseCases.Transacoes
 {
@@ -12,16 +11,24 @@ namespace ContaComigo.Application.UseCases.Transacoes
 
         public RegistrarTransacao(ITransacaoRepository transacaoRepository)
         {
-            // Adicione esta validação:
-            _transacaoRepository = transacaoRepository ?? throw new ArgumentNullException(nameof(transacaoRepository), "O repositório de transações não pode ser nulo.");
+            _transacaoRepository = transacaoRepository;
         }
 
         public void Executar(Transacao transacao)
         {
-            // A validação de 'transacao' em si já está no construtor da Transacao
-            // então não precisamos duplicar aqui, a menos que haja uma regra de negócio adicional.
+            if (transacao == null)
+            {
+                throw new ArgumentNullException(nameof(transacao));
+            }
 
-            _transacaoRepository.Adicionar(transacao);
+            // Lógica para ajustar o valor com base no tipo de transação
+            if (transacao.Tipo == TipoTransacao.Saida && transacao.Valor > 0)
+            {
+                transacao.Valor = -transacao.Valor; // Torna o valor negativo para saídas
+            }
+            // Se for Entrada, o valor já é positivo e permanece assim.
+
+            _transacaoRepository.Add(transacao);
         }
     }
 }

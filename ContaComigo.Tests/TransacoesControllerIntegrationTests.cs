@@ -1,122 +1,146 @@
-// ContaComigo.Tests/TransacoesControllerIntegrationTests.cs
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Text.Json; // Adicione este using para JsonSerializer
-using System.Threading.Tasks; // Mantenha este using, pois HttpClient.GetAsync é assíncrono
-using ContaComigo.Shared.Models;
-using FluentAssertions;
-using FluentAssertions.Web;
-using Microsoft.AspNetCore.Mvc.Testing; // Para CustomWebApplicationFactory
 using Xunit;
-using Moq;
-using ContaComigo; // **CRUCIAL**: Adicione este using para encontrar 'Program' e 'CustomWebApplicationFactory'
-using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Mvc.Testing;
+using System.Net.Http;
+using System.Threading.Tasks;
+using ContaComigo.Shared.Models;
+using System.Net.Http.Json;
+using System.Collections.Generic;
+using ContaComigo.Infrastructure.Repositories; // Para usar InMemoryTransacaoRepository
+using ContaComigo.Application.Interfaces; // Para ITransacaoRepository
+using Microsoft.Extensions.DependencyInjection; // Para criar escopo de serviço
+using System.Linq;
+using System;
+using Microsoft.VisualStudio.TestPlatform.TestHost;
 
 namespace ContaComigo.Tests
 {
-    public class TransacoesControllerIntegrationTests : IClassFixture<CustomWebApplicationFactory<Program>>
+    // WebApplicationFactory é um utilitário para testar APIs ASP.NET Core
+    public class TransacoesControllerIntegrationTests : IClassFixture<WebApplicationFactory<Program>>
     {
+        private readonly WebApplicationFactory<Program> _factory;
         private readonly HttpClient _client;
-        private readonly CustomWebApplicationFactory<Program> _factory;
-        // O mock deve ser inicializado, por isso não é 'readonly' direto na declaração,
-        // mas sim no construtor.
-        private readonly Mock<ContaComigo.Application.Interfaces.ITransacaoRepository> TransacaoRepositoryMock;
 
-        public TransacoesControllerIntegrationTests(CustomWebApplicationFactory<Program> factory)
+        public TransacoesControllerIntegrationTests(WebApplicationFactory<Program> factory)
         {
-            _factory = factory;
-            TransacaoRepositoryMock = new Mock<ContaComigo.Application.Interfaces.ITransacaoRepository>();
-
-            // Configura o factory para usar o mock em vez da implementação real do repositório
-            _client = _factory.WithWebHostBuilder(builder =>
+            _factory = factory.WithWebHostBuilder(builder =>
             {
                 builder.ConfigureServices(services =>
                 {
-                    // Encontre e remova a declaração existente do ITransacaoRepository
-                    // (que seria o InMemoryTransacaoRepository em sua aplicação real)
-                    var descriptor = services.SingleOrDefault(
-                        d => d.ServiceType == typeof(ContaComigo.Application.Interfaces.ITransacaoRepository));
-                    if (descriptor != null)
-                    {
-                        services.Remove(descriptor);
-                    }
-
-                    // Adicione o nosso mock do repositório.
-                    // Agora, quando o Controller pedir um ITransacaoRepository, ele receberá nosso mock.
-                    services.AddSingleton(TransacaoRepositoryMock.Object);
+                    // Substitua a implementação do repositório em memória para que os testes não interfiram nos dados estáticos
+                    // Criaremos uma nova instância para cada teste
+                    services.AddSingleton<ITransacaoRepository, InMemoryTransacaoRepository>();
                 });
-            }).CreateClient();
+            });
+            _client = _factory.CreateClient();
         }
 
-        // Teste de integração para GET /api/transacoes
         [Fact]
-        public async Task Get_Transacoes_DeveRetornarListaDeTransacoes()
+        public async Task Get_DeveRetornarTransacoesExistentes()
         {
             // Arrange
-            // Estas são as transações que o teste *espera* que a API retorne.
-            // Os IDs são gerados automaticamente pelo construtor de Transacao.
-            var expectedTransacoes = new List<Transacao>
-            {
-                new Transacao("Aluguel", 1500m, new DateTime(2023, 1, 1)),
-                new Transacao("Salário", 3000m, new DateTime(2023, 1, 5)),
-                new Transacao("Compras", 250m, new DateTime(2023, 1, 10))
-            };
-
-            // Configura o mock do repositório.
-            // Quando a API (o TransacoesController) chamar ObterTodas() no ITransacaoRepository,
-            // o mock vai interceptar essa chamada e retornar a 'expectedTransacoes'.
-            // Usamos .Returns() porque ObterTodas() é um método síncrono.
-            TransacaoRepositoryMock.Setup(repo => repo.ObterTodas())
-                                   .Returns(expectedTransacoes);
+            // Os dados iniciais estão no InMemoryTransacaoRepository
+            // Adicione Tipo e Categoria
+            var repo = (InMemoryTransacaoRepository)_factory.Services.GetRequiredService<ITransacaoRepository>();
+            repo.Add(new Transacao("Teste Get 1", 100m, DateTime.Now, TipoTransacao.Entrada, CategoriaTransacao.Outros));
+            repo.Add(new Transacao("Teste Get 2", -50m, DateTime.Now, TipoTransacao.Saida, CategoriaTransacao.Alimentacao));
 
             // Act
-            // Faz a requisição HTTP real para a API rodando em memória.
             var response = await _client.GetAsync("/api/transacoes");
 
             // Assert
-            // Primeiro, verifica se a resposta HTTP foi 200 OK.
-            response.Should().Be200Ok();
-
-            // Deserializa o conteúdo da resposta de string JSON para uma lista de Transacao.
-            // Usamos JsonSerializer.Deserialize com PropertyNameCaseInsensitive para maior robustez.
-            var jsonResponse = await response.Content.ReadAsStringAsync();
-            var transacoesRetornadas = JsonSerializer.Deserialize<List<Transacao>>(jsonResponse, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-
-            // Usa FluentAssertions para comparar as listas.
-            // O .Excluding(t => t.Id) é crucial aqui: ele diz para ignorar a comparação do campo Id,
-            // pois os IDs são gerados dinamicamente no construtor da Transacao, e o foco é testar
-            // se os outros dados de negócio foram retornados corretamente.
-            transacoesRetornadas.Should().BeEquivalentTo(expectedTransacoes, options => options
-                .ComparingByMembers<Transacao>()
-                .Excluding(t => t.Id));
-
-            // Verifica se o método ObterTodas() foi chamado no mock exatamente uma vez.
-            // Isso confirma que o TransacoesController realmente tentou buscar os dados do repositório.
-            TransacaoRepositoryMock.Verify(repo => repo.ObterTodas(), Times.Once);
+            response.EnsureSuccessStatusCode();
+            var transacoes = await response.Content.ReadFromJsonAsync<List<Transacao>>();
+            Assert.NotNull(transacoes);
+            // Verifica se as transações iniciais foram carregadas
+            // Alterado de ObterTodas para GetAll
+            Assert.True(transacoes.Count() >= 2); // Pode ter dados pre-existentes + os adicionados
+            Assert.Contains(transacoes, t => t.Descricao == "Teste Get 1");
+            Assert.Contains(transacoes, t => t.Descricao == "Teste Get 2");
         }
 
-        // Você pode adicionar mais testes de integração aqui conforme o projeto avança.
-        // Exemplo: Teste de integração para POST /api/transacoes
-        // [Fact]
-        // public async Task Post_Transacao_DeveRegistrar()
-        // {
-        //     // Arrange
-        //     var novaTransacao = new Transacao("Teste POST", 100m, DateTime.Now);
-        //
-        //     // Configure o mock para o método Adicionar (que é void)
-        //     TransacaoRepositoryMock.Setup(repo => repo.Adicionar(It.IsAny<Transacao>()));
-        //
-        //     // Act
-        //     var response = await _client.PostAsJsonAsync("/api/transacoes", novaTransacao);
-        //
-        //     // Assert
-        //     // Exemplo: espera 201 Created se a criação for bem-sucedida
-        //     response.Should().Be201Created();
-        //     // Verifica se o método Adicionar foi chamado no mock
-        //     TransacaoRepositoryMock.Verify(repo => repo.Adicionar(It.IsAny<Transacao>()), Times.Once);
-        // }
+        [Fact]
+        public async Task Post_DeveCriarNovaTransacao_E_RetornarCreated()
+        {
+            // Arrange
+            // Adicione Tipo e Categoria ao DTO
+            var novaTransacaoDto = new TransacaoDto
+            {
+                Descricao = "Compra Teste",
+                Valor = 200.00m,
+                Data = DateTime.Now,
+                Tipo = TipoTransacao.Saida,
+                Categoria = CategoriaTransacao.Lazer
+            };
+
+            // Act
+            var response = await _client.PostAsJsonAsync("/api/transacoes", novaTransacaoDto);
+
+            // Assert
+            response.EnsureSuccessStatusCode(); // Status 2xx
+            Assert.Equal(System.Net.HttpStatusCode.Created, response.StatusCode);
+
+            var transacaoCriada = await response.Content.ReadFromJsonAsync<Transacao>();
+            Assert.NotNull(transacaoCriada);
+            Assert.NotEqual(Guid.Empty, transacaoCriada.Id);
+            Assert.Equal(novaTransacaoDto.Descricao, transacaoCriada.Descricao);
+            // Verifica se o valor foi negativado corretamente no servidor
+            Assert.Equal(-novaTransacaoDto.Valor, transacaoCriada.Valor);
+            Assert.Equal(novaTransacaoDto.Tipo, transacaoCriada.Tipo);
+            Assert.Equal(novaTransacaoDto.Categoria, transacaoCriada.Categoria);
+
+            // Opcional: Verificar se a transação está no repositório após a criação
+            var repo = (InMemoryTransacaoRepository)_factory.Services.GetRequiredService<ITransacaoRepository>();
+            // Alterado de ObterTodas para GetAll
+            Assert.Contains(repo.GetAll(), t => t.Id == transacaoCriada.Id);
+        }
+
+        [Fact]
+        public async Task GetSaldo_DeveRetornarSaldoCorreto()
+        {
+            // Arrange
+            var repo = (InMemoryTransacaoRepository)_factory.Services.GetRequiredService<ITransacaoRepository>();
+            // Limpa o repositório para ter controle total sobre os dados de teste para o saldo
+            (repo as InMemoryTransacaoRepository)?.Clear(); // Assumindo que você adicione um método Clear no InMemoryTransacaoRepository
+
+            // Adicione transações para o cálculo do saldo
+            repo.Add(new Transacao("Depósito", 1000m, DateTime.Now, TipoTransacao.Entrada, CategoriaTransacao.Salario));
+            repo.Add(new Transacao("Conta de Água", 120m, DateTime.Now, TipoTransacao.Saida, CategoriaTransacao.Outros));
+            repo.Add(new Transacao("Reembolso", 50m, DateTime.Now, TipoTransacao.Entrada, CategoriaTransacao.Outros));
+            repo.Add(new Transacao("Lanche", 30m, DateTime.Now, TipoTransacao.Saida, CategoriaTransacao.Alimentacao));
+
+            // O RegistrarTransacao é que negativou, então os valores já devem estar assim no repositório para o teste.
+            // Se você chamar .Add diretamente, o InMemoryTransacaoRepository vai apenas adicionar.
+            // A soma esperada deve considerar os valores como eles são armazenados no repositório.
+            // Para garantir que o teste seja robusto, considere usar o UseCase RegistrarTransacao para adicionar as transações
+            // ou garantir que os valores já estejam com o sinal correto ao adicionar.
+            // Para este teste, vamos assumir que o "Add" do repositório já recebe o valor com o sinal correto.
+            decimal expectedSaldo = 1000m - 120m + 50m - 30m; // 900m
+
+            // Act
+            var response = await _client.GetAsync("/api/transacoes/saldo");
+
+            // Assert
+            response.EnsureSuccessStatusCode();
+            var saldo = await response.Content.ReadFromJsonAsync<decimal>();
+            Assert.Equal(expectedSaldo, saldo);
+        }
+    }
+
+    // Extensão para InMemoryTransacaoRepository para limpar os dados em testes
+    // Você pode adicionar este método no arquivo ContaComigo.Infrastructure/Repositories/InMemoryTransacaoRepository.cs
+    // Se você já não o tiver, adicione-o lá.
+    // Isso é útil para garantir que cada teste de integração rode com um estado limpo.
+    public static class InMemoryTransacaoRepositoryExtensions
+    {
+        public static void Clear(this InMemoryTransacaoRepository repo)
+        {
+            var field = typeof(InMemoryTransacaoRepository)
+                .GetField("_transacoes", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic);
+            if (field != null)
+            {
+                var list = field.GetValue(null) as System.Collections.IList;
+                list?.Clear();
+            }
+        }
     }
 }

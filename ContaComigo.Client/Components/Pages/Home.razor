@@ -1,0 +1,197 @@
+﻿@page "/"
+@using ContaComigo.Shared.Models
+@inject HttpClient Http
+@using System.Linq
+@using System.Globalization
+
+<PageTitle>Home</PageTitle>
+
+<h1>Minhas Transações</h1>
+
+@* Exibição do Saldo Total *@
+<div class="alert alert-info">
+    <h4>Saldo Total: **@saldoTotal.ToString("C", new CultureInfo("pt-BR"))**</h4>
+</div>
+
+@if (transacoes == null)
+{
+    <p><em>Carregando transações...</em></p>
+}
+else if (!transacoes.Any())
+{
+    <p>Nenhuma transação encontrada.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Descrição</th>
+                <th>Valor</th>
+                <th>Data</th>
+                <th>Tipo</th>
+                <th>Categoria</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var transacao in transacoes)
+            {
+                <tr>
+                    <td>@transacao.Descricao</td>
+                    <td>@transacao.Valor.ToString("C", new CultureInfo("pt-BR"))</td>
+                    <td>@transacao.Data.ToShortDateString()</td>
+                    <td>@transacao.Tipo</td>
+                    <td>@transacao.Categoria</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<h2 class="mt-4">Registrar Nova Transação</h2>
+
+<div class="card p-3">
+    <EditForm Model="@novaTransacao" OnValidSubmit="@HandleValidSubmit" FormName="transacaoForm">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <div class="mb-3">
+            <label for="descricao" class="form-label">Descrição:</label>
+            <InputText id="descricao" class="form-control" @bind-Value="novaTransacao.Descricao" @oninput="@((e) => OnDescricaoInput(e.Value?.ToString() ?? string.Empty))" />
+            <ValidationMessage For="@(() => novaTransacao.Descricao)" />
+        </div>
+
+        <div class="mb-3">
+            <label for="valor" class="form-label">Valor:</label>
+            <InputNumber id="valor" class="form-control" @bind-Value="novaTransacao.Valor" Culture="System.Globalization.CultureInfo.InvariantCulture" />
+            <ValidationMessage For="@(() => novaTransacao.Valor)" />
+        </div>
+
+        <div class="mb-3">
+            <label for="data" class="form-label">Data:</label>
+            <InputDate id="data" class="form-control" @bind-Value="novaTransacao.Data" />
+            <ValidationMessage For="@(() => novaTransacao.Data)" />
+        </div>
+
+        @* Campo para o Tipo de Transação *@
+        <div class="mb-3">
+            <label for="tipo" class="form-label">Tipo:</label>
+            <InputSelect id="tipo" class="form-control" @bind-Value="novaTransacao.Tipo">
+                <option value="">Selecione o Tipo</option>
+                @foreach (var tipo in Enum.GetValues<TipoTransacao>())
+                {
+                    <option value="@tipo">@tipo.ToString()</option>
+                }
+            </InputSelect>
+            <ValidationMessage For="@(() => novaTransacao.Tipo)" />
+        </div>
+
+        @* Campo para a Categoria da Transação *@
+        <div class="mb-3">
+            <label for="categoria" class="form-label">Categoria:</label>
+            <InputSelect id="categoria" class="form-control" @bind-Value="novaTransacao.Categoria">
+                <option value="">Selecione a Categoria</option>
+                @foreach (var categoria in Enum.GetValues<CategoriaTransacao>())
+                {
+                    <option value="@categoria">@categoria.ToString()</option>
+                }
+            </InputSelect>
+            <ValidationMessage For="@(() => novaTransacao.Categoria)" />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Registrar Transação</button>
+    </EditForm>
+</div>
+
+
+@code {
+    private List<Transacao>? transacoes;
+    private Transacao novaTransacao = new Transacao();
+    private decimal saldoTotal; // Propriedade para armazenar e exibir o saldo
+
+    private void OnDescricaoInput(string value)
+    {
+        novaTransacao.Descricao = value;
+        StateHasChanged();
+        Console.WriteLine($"DEBUG: Descrição atualizada para '{novaTransacao.Descricao}'");
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Console.WriteLine("DEBUG: Carregando transações e saldo ao inicializar o componente.");
+        await CarregarDados(); // Chama o método que carrega ambos
+    }
+
+    // Novo método para orquestrar o carregamento de transações e saldo
+    private async Task CarregarDados()
+    {
+        await CarregarTransacoes();
+        await CarregarSaldoTotal();
+        StateHasChanged(); // Força a UI a atualizar após carregar ambos
+    }
+
+    private async Task CarregarTransacoes()
+    {
+        try
+        {
+            transacoes = await Http.GetFromJsonAsync<List<Transacao>>("api/transacoes");
+            Console.WriteLine($"DEBUG: Transações carregadas. Total: {transacoes?.Count ?? 0}");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"DEBUG: Erro ao carregar transações: {ex.Message}");
+            transacoes = new List<Transacao>(); // Garante que a lista não é nula
+        }
+    }
+
+    // Novo método para carregar o saldo total
+    private async Task CarregarSaldoTotal()
+    {
+        try
+        {
+            saldoTotal = await Http.GetFromJsonAsync<decimal>("api/transacoes/saldo");
+            Console.WriteLine($"DEBUG: Saldo total carregado: {saldoTotal.ToString("C")}");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"DEBUG: Erro ao carregar saldo: {ex.Message}");
+            saldoTotal = 0.00m; // Define como 0.00 em caso de erro
+        }
+    }
+
+    private async Task HandleValidSubmit()
+    {
+        Console.WriteLine($"DEBUG: HandleValidSubmit chamado. Tentando registrar transação: {novaTransacao.Descricao}, {novaTransacao.Valor}, {novaTransacao.Data}, {novaTransacao.Tipo}, {novaTransacao.Categoria}");
+
+        try
+        {
+            var transacaoDto = new TransacaoDto
+                {
+                    Descricao = novaTransacao.Descricao,
+                    Valor = novaTransacao.Valor,
+                    Data = novaTransacao.Data,
+                    Tipo = novaTransacao.Tipo,
+                    Categoria = novaTransacao.Categoria
+                };
+
+            var response = await Http.PostAsJsonAsync("api/transacoes", transacaoDto);
+
+            if (response.IsSuccessStatusCode)
+            {
+                Console.WriteLine("DEBUG: Transação adicionada com sucesso na API!");
+                await CarregarDados(); // Recarrega transações e saldo após adicionar uma nova
+                novaTransacao = new Transacao(); // Reseta o formulário
+            }
+            else
+            {
+                var errorContent = await response.Content.ReadAsStringAsync();
+                Console.WriteLine($"DEBUG: Erro ao adicionar transação na API: {response.StatusCode} - {errorContent}");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"DEBUG: Erro inesperado ao enviar transação para a API: {ex.Message}");
+        }
+        StateHasChanged(); // Força a UI a atualizar
+    }
+}

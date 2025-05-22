@@ -3,40 +3,64 @@
   "WorkspaceRootPath": "C:\\Users\\User\\Desktop\\Projetos-treinamento\\projetos\\ContaComigo\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{19DE81F2-9FC9-4864-AAB3-F65338829BBD}|ContaComigo.Client\\ContaComigo.Client.csproj|c:\\users\\user\\desktop\\projetos-treinamento\\projetos\\contacomigo\\contacomigo.client\\pages\\novatransacao.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{19DE81F2-9FC9-4864-AAB3-F65338829BBD}|ContaComigo.Client\\ContaComigo.Client.csproj|solutionrelative:contacomigo.client\\pages\\novatransacao.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{F2AAB76F-D3CC-45FA-B89D-79B18FE0793E}|ContaComigo.Tests\\ContaComigo.Tests.csproj|c:\\users\\user\\desktop\\projetos-treinamento\\projetos\\contacomigo\\contacomigo.tests\\transacoescontrollerintegrationtests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F2AAB76F-D3CC-45FA-B89D-79B18FE0793E}|ContaComigo.Tests\\ContaComigo.Tests.csproj|solutionrelative:contacomigo.tests\\transacoescontrollerintegrationtests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B898D9A4-31F6-4C01-8A02-F1DEA4052A18}|ContaComigo.Shared\\ContaComigo.Shared.csproj|c:\\users\\user\\desktop\\projetos-treinamento\\projetos\\contacomigo\\contacomigo.shared\\models\\transacaodto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B898D9A4-31F6-4C01-8A02-F1DEA4052A18}|ContaComigo.Shared\\ContaComigo.Shared.csproj|solutionrelative:contacomigo.shared\\models\\transacaodto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{F2AAB76F-D3CC-45FA-B89D-79B18FE0793E}|ContaComigo.Tests\\ContaComigo.Tests.csproj|c:\\users\\user\\desktop\\projetos-treinamento\\projetos\\contacomigo\\contacomigo.tests\\obtertodastransacoestests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F2AAB76F-D3CC-45FA-B89D-79B18FE0793E}|ContaComigo.Tests\\ContaComigo.Tests.csproj|solutionrelative:contacomigo.tests\\obtertodastransacoestests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{083C3CE0-CD5A-46D1-B474-69B3EDAC9DFA}|ContaComigo\\ContaComigo.csproj|c:\\users\\user\\desktop\\projetos-treinamento\\projetos\\contacomigo\\contacomigo\\components\\pages\\home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{083C3CE0-CD5A-46D1-B474-69B3EDAC9DFA}|ContaComigo\\ContaComigo.csproj|solutionrelative:contacomigo\\components\\pages\\home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{F2AAB76F-D3CC-45FA-B89D-79B18FE0793E}|ContaComigo.Tests\\ContaComigo.Tests.csproj|c:\\users\\user\\desktop\\projetos-treinamento\\projetos\\contacomigo\\contacomigo.tests\\registrartransacaotests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F2AAB76F-D3CC-45FA-B89D-79B18FE0793E}|ContaComigo.Tests\\ContaComigo.Tests.csproj|solutionrelative:contacomigo.tests\\registrartransacaotests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B898D9A4-31F6-4C01-8A02-F1DEA4052A18}|ContaComigo.Shared\\ContaComigo.Shared.csproj|c:\\users\\user\\desktop\\projetos-treinamento\\projetos\\contacomigo\\contacomigo.shared\\models\\transacao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B898D9A4-31F6-4C01-8A02-F1DEA4052A18}|ContaComigo.Shared\\ContaComigo.Shared.csproj|solutionrelative:contacomigo.shared\\models\\transacao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{083C3CE0-CD5A-46D1-B474-69B3EDAC9DFA}|ContaComigo\\ContaComigo.csproj|c:\\users\\user\\desktop\\projetos-treinamento\\projetos\\contacomigo\\contacomigo\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{083C3CE0-CD5A-46D1-B474-69B3EDAC9DFA}|ContaComigo\\ContaComigo.csproj|solutionrelative:contacomigo\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{083C3CE0-CD5A-46D1-B474-69B3EDAC9DFA}|ContaComigo\\ContaComigo.csproj|c:\\users\\user\\desktop\\projetos-treinamento\\projetos\\contacomigo\\contacomigo\\infrastructure\\repositories\\inmemorytransacaorepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{083C3CE0-CD5A-46D1-B474-69B3EDAC9DFA}|ContaComigo\\ContaComigo.csproj|solutionrelative:contacomigo\\infrastructure\\repositories\\inmemorytransacaorepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{E6FE6991-14A7-45D4-9B28-A8C2C843488C}|ContaComigo.Client\\ContaComigo.Client.csproj|c:\\users\\user\\desktop\\projetos-treinamento\\projetos\\contacomigo\\contacomigo.client\\components\\pages\\home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{E6FE6991-14A7-45D4-9B28-A8C2C843488C}|ContaComigo.Client\\ContaComigo.Client.csproj|solutionrelative:contacomigo.client\\components\\pages\\home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{083C3CE0-CD5A-46D1-B474-69B3EDAC9DFA}|ContaComigo\\ContaComigo.csproj|c:\\users\\user\\desktop\\projetos-treinamento\\projetos\\contacomigo\\contacomigo\\controllers\\transacoescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{083C3CE0-CD5A-46D1-B474-69B3EDAC9DFA}|ContaComigo\\ContaComigo.csproj|solutionrelative:contacomigo\\controllers\\transacoescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F2AAB76F-D3CC-45FA-B89D-79B18FE0793E}|ContaComigo.Tests\\ContaComigo.Tests.csproj|c:\\users\\user\\desktop\\projetos-treinamento\\projetos\\contacomigo\\contacomigo.tests\\customwebapplicationfactory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F2AAB76F-D3CC-45FA-B89D-79B18FE0793E}|ContaComigo.Tests\\ContaComigo.Tests.csproj|solutionrelative:contacomigo.tests\\customwebapplicationfactory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{083C3CE0-CD5A-46D1-B474-69B3EDAC9DFA}|ContaComigo\\ContaComigo.csproj|c:\\users\\user\\desktop\\projetos-treinamento\\projetos\\contacomigo\\contacomigo\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{083C3CE0-CD5A-46D1-B474-69B3EDAC9DFA}|ContaComigo\\ContaComigo.csproj|solutionrelative:contacomigo\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F2AAB76F-D3CC-45FA-B89D-79B18FE0793E}|ContaComigo.Tests\\ContaComigo.Tests.csproj|c:\\users\\user\\desktop\\projetos-treinamento\\projetos\\contacomigo\\contacomigo.tests\\transacoescontrollerintegrationtests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F2AAB76F-D3CC-45FA-B89D-79B18FE0793E}|ContaComigo.Tests\\ContaComigo.Tests.csproj|solutionrelative:contacomigo.tests\\transacoescontrollerintegrationtests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{083C3CE0-CD5A-46D1-B474-69B3EDAC9DFA}|ContaComigo\\ContaComigo.csproj|c:\\users\\user\\desktop\\projetos-treinamento\\projetos\\contacomigo\\contacomigo\\application\\usecases\\transacoes\\obtersaldototal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{083C3CE0-CD5A-46D1-B474-69B3EDAC9DFA}|ContaComigo\\ContaComigo.csproj|solutionrelative:contacomigo\\application\\usecases\\transacoes\\obtersaldototal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{083C3CE0-CD5A-46D1-B474-69B3EDAC9DFA}|ContaComigo\\ContaComigo.csproj|c:\\users\\user\\desktop\\projetos-treinamento\\projetos\\contacomigo\\contacomigo\\infrastructure\\repositories\\inmemorytransacaorepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{083C3CE0-CD5A-46D1-B474-69B3EDAC9DFA}|ContaComigo\\ContaComigo.csproj|solutionrelative:contacomigo\\infrastructure\\repositories\\inmemorytransacaorepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{083C3CE0-CD5A-46D1-B474-69B3EDAC9DFA}|ContaComigo\\ContaComigo.csproj|c:\\users\\user\\desktop\\projetos-treinamento\\projetos\\contacomigo\\contacomigo\\application\\usecases\\transacoes\\registrartransacao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{083C3CE0-CD5A-46D1-B474-69B3EDAC9DFA}|ContaComigo\\ContaComigo.csproj|solutionrelative:contacomigo\\application\\usecases\\transacoes\\registrartransacao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B898D9A4-31F6-4C01-8A02-F1DEA4052A18}|ContaComigo.Shared\\ContaComigo.Shared.csproj|c:\\users\\user\\desktop\\projetos-treinamento\\projetos\\contacomigo\\contacomigo.shared\\models\\transacaodto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B898D9A4-31F6-4C01-8A02-F1DEA4052A18}|ContaComigo.Shared\\ContaComigo.Shared.csproj|solutionrelative:contacomigo.shared\\models\\transacaodto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B898D9A4-31F6-4C01-8A02-F1DEA4052A18}|ContaComigo.Shared\\ContaComigo.Shared.csproj|c:\\users\\user\\desktop\\projetos-treinamento\\projetos\\contacomigo\\contacomigo.shared\\models\\transacao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B898D9A4-31F6-4C01-8A02-F1DEA4052A18}|ContaComigo.Shared\\ContaComigo.Shared.csproj|solutionrelative:contacomigo.shared\\models\\transacao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B898D9A4-31F6-4C01-8A02-F1DEA4052A18}|ContaComigo.Shared\\ContaComigo.Shared.csproj|c:\\users\\user\\desktop\\projetos-treinamento\\projetos\\contacomigo\\contacomigo.shared\\models\\enums\\categoriatransacao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B898D9A4-31F6-4C01-8A02-F1DEA4052A18}|ContaComigo.Shared\\ContaComigo.Shared.csproj|solutionrelative:contacomigo.shared\\models\\enums\\categoriatransacao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B898D9A4-31F6-4C01-8A02-F1DEA4052A18}|ContaComigo.Shared\\ContaComigo.Shared.csproj|c:\\users\\user\\desktop\\projetos-treinamento\\projetos\\contacomigo\\contacomigo.shared\\models\\enums\\tipotransacao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B898D9A4-31F6-4C01-8A02-F1DEA4052A18}|ContaComigo.Shared\\ContaComigo.Shared.csproj|solutionrelative:contacomigo.shared\\models\\enums\\tipotransacao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{083C3CE0-CD5A-46D1-B474-69B3EDAC9DFA}|ContaComigo\\ContaComigo.csproj|c:\\users\\user\\desktop\\projetos-treinamento\\projetos\\contacomigo\\contacomigo\\application\\usecases\\transacoes\\obtertodastransacoes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{083C3CE0-CD5A-46D1-B474-69B3EDAC9DFA}|ContaComigo\\ContaComigo.csproj|solutionrelative:contacomigo\\application\\usecases\\transacoes\\obtertodastransacoes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{083C3CE0-CD5A-46D1-B474-69B3EDAC9DFA}|ContaComigo\\ContaComigo.csproj|c:\\users\\user\\desktop\\projetos-treinamento\\projetos\\contacomigo\\contacomigo\\application\\interfaces\\itransacaorepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{083C3CE0-CD5A-46D1-B474-69B3EDAC9DFA}|ContaComigo\\ContaComigo.csproj|solutionrelative:contacomigo\\application\\interfaces\\itransacaorepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -46,140 +70,191 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 0,
           "Children": [
-            {
-              "$type": "Bookmark",
-              "Name": "ST:128:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:129:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{e1b7d1f8-9b3c-49b1-8f4f-bfc63a88835d}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "TransacaoDto.cs",
-              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Projetos-treinamento\\projetos\\ContaComigo\\ContaComigo.Shared\\Models\\TransacaoDto.cs",
-              "RelativeDocumentMoniker": "ContaComigo.Shared\\Models\\TransacaoDto.cs",
-              "ToolTip": "C:\\Users\\User\\Desktop\\Projetos-treinamento\\projetos\\ContaComigo\\ContaComigo.Shared\\Models\\TransacaoDto.cs",
-              "RelativeToolTip": "ContaComigo.Shared\\Models\\TransacaoDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-21T20:22:50.51Z",
-              "EditorCaption": ""
-            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "NovaTransacao.razor",
-              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Projetos-treinamento\\projetos\\ContaComigo\\ContaComigo.Client\\Pages\\NovaTransacao.razor",
-              "RelativeDocumentMoniker": "ContaComigo.Client\\Pages\\NovaTransacao.razor",
-              "ToolTip": "C:\\Users\\User\\Desktop\\Projetos-treinamento\\projetos\\ContaComigo\\ContaComigo.Client\\Pages\\NovaTransacao.razor",
-              "RelativeToolTip": "ContaComigo.Client\\Pages\\NovaTransacao.razor",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAAABQAAAA8AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-05-21T20:22:00.924Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Transacao.cs",
-              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Projetos-treinamento\\projetos\\ContaComigo\\ContaComigo.Shared\\Models\\Transacao.cs",
-              "RelativeDocumentMoniker": "ContaComigo.Shared\\Models\\Transacao.cs",
-              "ToolTip": "C:\\Users\\User\\Desktop\\Projetos-treinamento\\projetos\\ContaComigo\\ContaComigo.Shared\\Models\\Transacao.cs",
-              "RelativeToolTip": "ContaComigo.Shared\\Models\\Transacao.cs",
-              "ViewState": "AgIAACAAAAAAAAAAAAAowCYAAAAYAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-21T20:05:57.718Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "InMemoryTransacaoRepository.cs",
-              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Projetos-treinamento\\projetos\\ContaComigo\\ContaComigo\\Infrastructure\\Repositories\\InMemoryTransacaoRepository.cs",
-              "RelativeDocumentMoniker": "ContaComigo\\Infrastructure\\Repositories\\InMemoryTransacaoRepository.cs",
-              "ToolTip": "C:\\Users\\User\\Desktop\\Projetos-treinamento\\projetos\\ContaComigo\\ContaComigo\\Infrastructure\\Repositories\\InMemoryTransacaoRepository.cs",
-              "RelativeToolTip": "ContaComigo\\Infrastructure\\Repositories\\InMemoryTransacaoRepository.cs",
-              "ViewState": "AgIAAAoAAAAAAAAAAADwvxkAAAAoAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-21T17:25:24.626Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Home.razor",
-              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Projetos-treinamento\\projetos\\ContaComigo\\ContaComigo\\Components\\Pages\\Home.razor",
-              "RelativeDocumentMoniker": "ContaComigo\\Components\\Pages\\Home.razor",
-              "ToolTip": "C:\\Users\\User\\Desktop\\Projetos-treinamento\\projetos\\ContaComigo\\ContaComigo\\Components\\Pages\\Home.razor",
-              "RelativeToolTip": "ContaComigo\\Components\\Pages\\Home.razor",
-              "ViewState": "AgIAAIIAAAAAAAAAAAAcwJQAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-05-21T17:58:55.454Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "TransacoesController.cs",
-              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Projetos-treinamento\\projetos\\ContaComigo\\ContaComigo\\Controllers\\TransacoesController.cs",
-              "RelativeDocumentMoniker": "ContaComigo\\Controllers\\TransacoesController.cs",
-              "ToolTip": "C:\\Users\\User\\Desktop\\Projetos-treinamento\\projetos\\ContaComigo\\ContaComigo\\Controllers\\TransacoesController.cs",
-              "RelativeToolTip": "ContaComigo\\Controllers\\TransacoesController.cs",
-              "ViewState": "AgIAACsAAAAAAAAAAAAqwDYAAAAmAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-21T19:38:31.72Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Projetos-treinamento\\projetos\\ContaComigo\\ContaComigo\\Program.cs",
-              "RelativeDocumentMoniker": "ContaComigo\\Program.cs",
-              "ToolTip": "C:\\Users\\User\\Desktop\\Projetos-treinamento\\projetos\\ContaComigo\\ContaComigo\\Program.cs",
-              "RelativeToolTip": "ContaComigo\\Program.cs",
-              "ViewState": "AgIAADIAAAAAAAAAAAAcwDYAAAAaAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-21T17:39:54.693Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "CustomWebApplicationFactory.cs",
-              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Projetos-treinamento\\projetos\\ContaComigo\\ContaComigo.Tests\\CustomWebApplicationFactory.cs",
-              "RelativeDocumentMoniker": "ContaComigo.Tests\\CustomWebApplicationFactory.cs",
-              "ToolTip": "C:\\Users\\User\\Desktop\\Projetos-treinamento\\projetos\\ContaComigo\\ContaComigo.Tests\\CustomWebApplicationFactory.cs",
-              "RelativeToolTip": "ContaComigo.Tests\\CustomWebApplicationFactory.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAsAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-21T17:46:37.825Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
               "Title": "TransacoesControllerIntegrationTests.cs",
               "DocumentMoniker": "C:\\Users\\User\\Desktop\\Projetos-treinamento\\projetos\\ContaComigo\\ContaComigo.Tests\\TransacoesControllerIntegrationTests.cs",
               "RelativeDocumentMoniker": "ContaComigo.Tests\\TransacoesControllerIntegrationTests.cs",
               "ToolTip": "C:\\Users\\User\\Desktop\\Projetos-treinamento\\projetos\\ContaComigo\\ContaComigo.Tests\\TransacoesControllerIntegrationTests.cs",
               "RelativeToolTip": "ContaComigo.Tests\\TransacoesControllerIntegrationTests.cs",
-              "ViewState": "AgIAAAwAAAAAAAAAAAArwBkAAABGAAAAAAAAAA==",
+              "ViewState": "AgIAAIEAAAAAAAAAAAAmwIgAAAA7AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-21T17:28:52.959Z"
+              "WhenOpened": "2025-05-22T20:48:17.323Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "RegistrarTransacaoTests.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Projetos-treinamento\\projetos\\ContaComigo\\ContaComigo.Tests\\RegistrarTransacaoTests.cs",
+              "RelativeDocumentMoniker": "ContaComigo.Tests\\RegistrarTransacaoTests.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Projetos-treinamento\\projetos\\ContaComigo\\ContaComigo.Tests\\RegistrarTransacaoTests.cs",
+              "RelativeToolTip": "ContaComigo.Tests\\RegistrarTransacaoTests.cs",
+              "ViewState": "AgIAAFwAAAAAAAAAAAAmwGoAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-22T20:43:45.145Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ObterTodasTransacoesTests.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Projetos-treinamento\\projetos\\ContaComigo\\ContaComigo.Tests\\ObterTodasTransacoesTests.cs",
+              "RelativeDocumentMoniker": "ContaComigo.Tests\\ObterTodasTransacoesTests.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Projetos-treinamento\\projetos\\ContaComigo\\ContaComigo.Tests\\ObterTodasTransacoesTests.cs",
+              "RelativeToolTip": "ContaComigo.Tests\\ObterTodasTransacoesTests.cs",
+              "ViewState": "AgIAACkAAAAAAAAAAAA6wDoAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-22T20:42:28.461Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Projetos-treinamento\\projetos\\ContaComigo\\ContaComigo\\Program.cs",
+              "RelativeDocumentMoniker": "ContaComigo\\Program.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Projetos-treinamento\\projetos\\ContaComigo\\ContaComigo\\Program.cs",
+              "RelativeToolTip": "ContaComigo\\Program.cs",
+              "ViewState": "AgIAACoAAAAAAAAAAAAmwD8AAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-22T20:25:14.031Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "ObterSaldoTotal.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Projetos-treinamento\\projetos\\ContaComigo\\ContaComigo\\Application\\UseCases\\Transacoes\\ObterSaldoTotal.cs",
+              "RelativeDocumentMoniker": "ContaComigo\\Application\\UseCases\\Transacoes\\ObterSaldoTotal.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Projetos-treinamento\\projetos\\ContaComigo\\ContaComigo\\Application\\UseCases\\Transacoes\\ObterSaldoTotal.cs",
+              "RelativeToolTip": "ContaComigo\\Application\\UseCases\\Transacoes\\ObterSaldoTotal.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAqwBYAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-22T20:23:31.32Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "TransacoesController.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Projetos-treinamento\\projetos\\ContaComigo\\ContaComigo\\Controllers\\TransacoesController.cs",
+              "RelativeDocumentMoniker": "ContaComigo\\Controllers\\TransacoesController.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Projetos-treinamento\\projetos\\ContaComigo\\ContaComigo\\Controllers\\TransacoesController.cs",
+              "RelativeToolTip": "ContaComigo\\Controllers\\TransacoesController.cs",
+              "ViewState": "AgIAAFQAAAAAAAAAAAAmwGcAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-22T20:15:27.853Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Home.razor",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Projetos-treinamento\\projetos\\ContaComigo\\ContaComigo.Client\\Components\\Pages\\Home.razor",
+              "RelativeDocumentMoniker": "ContaComigo.Client\\Components\\Pages\\Home.razor",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Projetos-treinamento\\projetos\\ContaComigo\\ContaComigo.Client\\Components\\Pages\\Home.razor",
+              "RelativeToolTip": "ContaComigo.Client\\Components\\Pages\\Home.razor",
+              "ViewState": "AgIAALQAAAAAAAAAAAAqwLsAAAB4AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-22T20:13:20.439Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "TransacaoDto.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Projetos-treinamento\\projetos\\ContaComigo\\ContaComigo.Shared\\Models\\TransacaoDto.cs",
+              "RelativeDocumentMoniker": "ContaComigo.Shared\\Models\\TransacaoDto.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Projetos-treinamento\\projetos\\ContaComigo\\ContaComigo.Shared\\Models\\TransacaoDto.cs",
+              "RelativeToolTip": "ContaComigo.Shared\\Models\\TransacaoDto.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAA6wBkAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-22T20:11:49.527Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "RegistrarTransacao.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Projetos-treinamento\\projetos\\ContaComigo\\ContaComigo\\Application\\UseCases\\Transacoes\\RegistrarTransacao.cs",
+              "RelativeDocumentMoniker": "ContaComigo\\Application\\UseCases\\Transacoes\\RegistrarTransacao.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Projetos-treinamento\\projetos\\ContaComigo\\ContaComigo\\Application\\UseCases\\Transacoes\\RegistrarTransacao.cs",
+              "RelativeToolTip": "ContaComigo\\Application\\UseCases\\Transacoes\\RegistrarTransacao.cs",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAmwBYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-22T19:53:16.914Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "InMemoryTransacaoRepository.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Projetos-treinamento\\projetos\\ContaComigo\\ContaComigo\\Infrastructure\\Repositories\\InMemoryTransacaoRepository.cs",
+              "RelativeDocumentMoniker": "ContaComigo\\Infrastructure\\Repositories\\InMemoryTransacaoRepository.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Projetos-treinamento\\projetos\\ContaComigo\\ContaComigo\\Infrastructure\\Repositories\\InMemoryTransacaoRepository.cs",
+              "RelativeToolTip": "ContaComigo\\Infrastructure\\Repositories\\InMemoryTransacaoRepository.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAAmwCYAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-22T19:29:59.151Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Transacao.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Projetos-treinamento\\projetos\\ContaComigo\\ContaComigo.Shared\\Models\\Transacao.cs",
+              "RelativeDocumentMoniker": "ContaComigo.Shared\\Models\\Transacao.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Projetos-treinamento\\projetos\\ContaComigo\\ContaComigo.Shared\\Models\\Transacao.cs",
+              "RelativeToolTip": "ContaComigo.Shared\\Models\\Transacao.cs",
+              "ViewState": "AgIAABUAAAAAAAAAAAAmwCgAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-22T20:11:27.694Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "CategoriaTransacao.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Projetos-treinamento\\projetos\\ContaComigo\\ContaComigo.Shared\\Models\\Enums\\CategoriaTransacao.cs",
+              "RelativeDocumentMoniker": "ContaComigo.Shared\\Models\\Enums\\CategoriaTransacao.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Projetos-treinamento\\projetos\\ContaComigo\\ContaComigo.Shared\\Models\\Enums\\CategoriaTransacao.cs",
+              "RelativeToolTip": "ContaComigo.Shared\\Models\\Enums\\CategoriaTransacao.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-22T20:10:39.235Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "TipoTransacao.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Projetos-treinamento\\projetos\\ContaComigo\\ContaComigo.Shared\\Models\\Enums\\TipoTransacao.cs",
+              "RelativeDocumentMoniker": "ContaComigo.Shared\\Models\\Enums\\TipoTransacao.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Projetos-treinamento\\projetos\\ContaComigo\\ContaComigo.Shared\\Models\\Enums\\TipoTransacao.cs",
+              "RelativeToolTip": "ContaComigo.Shared\\Models\\Enums\\TipoTransacao.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-22T20:09:29.044Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "ObterTodasTransacoes.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Projetos-treinamento\\projetos\\ContaComigo\\ContaComigo\\Application\\UseCases\\Transacoes\\ObterTodasTransacoes.cs",
+              "RelativeDocumentMoniker": "ContaComigo\\Application\\UseCases\\Transacoes\\ObterTodasTransacoes.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Projetos-treinamento\\projetos\\ContaComigo\\ContaComigo\\Application\\UseCases\\Transacoes\\ObterTodasTransacoes.cs",
+              "RelativeToolTip": "ContaComigo\\Application\\UseCases\\Transacoes\\ObterTodasTransacoes.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAmwBUAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-22T19:53:04.804Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "ITransacaoRepository.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Projetos-treinamento\\projetos\\ContaComigo\\ContaComigo\\Application\\Interfaces\\ITransacaoRepository.cs",
+              "RelativeDocumentMoniker": "ContaComigo\\Application\\Interfaces\\ITransacaoRepository.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Projetos-treinamento\\projetos\\ContaComigo\\ContaComigo\\Application\\Interfaces\\ITransacaoRepository.cs",
+              "RelativeToolTip": "ContaComigo\\Application\\Interfaces\\ITransacaoRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-22T19:15:37.105Z"
             }
           ]
         }

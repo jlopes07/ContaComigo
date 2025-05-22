@@ -1,55 +1,39 @@
-﻿// ContaComigo/Infrastructure/Repositories/InMemoryTransacaoRepository.cs
-
+﻿// ContaComigo.Infrastructure/Repositories/InMemoryTransacaoRepository.cs
 using ContaComigo.Application.Interfaces;
 using ContaComigo.Shared.Models;
 using System.Collections.Generic;
-using System.Linq; // Essencial para FirstOrDefault
-using System; // Essencial para Guid
+using System.Linq;
+using System;
 
-namespace ContaComigo.Infrastructure.Repositories;
-
-public class InMemoryTransacaoRepository : ITransacaoRepository
+namespace ContaComigo.Infrastructure.Repositories
 {
-    // Usamos uma lista privada para simular o armazenamento em memória
-    // Para testes de unidade isolados, cada instância do repositório pode ter sua própria lista.
-    // Para um repositório em memória em cenário de aplicação real, talvez fosse estática ou Singleton.
-    private static List<Transacao> _transacoes = new();
-
-    public void Adicionar(Transacao transacao)
+    public class InMemoryTransacaoRepository : ITransacaoRepository
     {
-        _transacoes.Add(transacao);
+        private static readonly List<Transacao> _transacoes = new List<Transacao>
+        {
+            // Ajuste aqui para incluir TipoTransacao e CategoriaTransacao
+            new Transacao("Aluguel", 1500.00m, new DateTime(2025, 4, 1), TipoTransacao.Saida, CategoriaTransacao.Aluguel), // Valor já deve ser negativo se a lógica do Use Case rodou
+            new Transacao("Salário", 3000.00m, new DateTime(2025, 4, 5), TipoTransacao.Entrada, CategoriaTransacao.Salario),
+            new Transacao("Compras Supermercado", 250.00m, new DateTime(2025, 4, 10), TipoTransacao.Saida, CategoriaTransacao.Alimentacao) // Valor já deve ser negativo se a lógica do Use Case rodou
+        };
+
+        public IEnumerable<Transacao> GetAll()
+        {
+            return _transacoes.AsEnumerable();
+        }
+
+        public void Add(Transacao transacao)
+        {
+            if (transacao.Id == Guid.Empty)
+            {
+                transacao.Id = Guid.NewGuid();
+            }
+            _transacoes.Add(transacao);
+        }
+
+        public Transacao? GetById(Guid id)
+        {
+            return _transacoes.FirstOrDefault(t => t.Id == id);
+        }
     }
-
-    public IEnumerable<Transacao> ObterTodas()
-    {
-        // Retorna uma cópia somente leitura da lista para evitar modificações externas diretas
-        return _transacoes.AsReadOnly();
-    }
-
-    // Retorna Transacao? para indicar que pode não encontrar
-    public Transacao? ObterPorId(Guid id)
-    {
-        return _transacoes.FirstOrDefault(t => t.Id == id);
-    }
-
-    // Exemplo de implementação para métodos futuros (se você adicioná-los na interface)
-    // public void Atualizar(Transacao transacao)
-    // {
-    //      var existingTransacao = _transacoes.FirstOrDefault(t => t.Id == transacao.Id);
-    //      if (existingTransacao != null)
-    //      {
-    //          // Remova e adicione novamente para simular uma atualização completa, ou atualize propriedades individualmente
-    //          _transacoes.Remove(existingTransacao);
-    //          _transacoes.Add(transacao);
-    //      }
-    // }
-
-    // public void Remover(Guid id)
-    // {
-    //      var transacaoToRemove = _transacoes.FirstOrDefault(t => t.Id == id);
-    //      if (transacaoToRemove != null)
-    //      {
-    //          _transacoes.Remove(transacaoToRemove);
-    //      }
-    // }
 }

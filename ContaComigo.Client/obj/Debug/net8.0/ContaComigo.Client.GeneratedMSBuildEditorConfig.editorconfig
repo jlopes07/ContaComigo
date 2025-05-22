@@ -28,18 +28,30 @@ build_property.EnableCodeStyleSeverity =
 build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/Desktop/Projetos-treinamento/projetos/ContaComigo/ContaComigo.Client/Pages/Counter.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ291bnRlci5yYXpvcg==
+[C:/Users/User/Desktop/Projetos-treinamento/projetos/ContaComigo/ContaComigo.Client/Component.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50LnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/Desktop/Projetos-treinamento/projetos/ContaComigo/ContaComigo.Client/Pages/NovaTransacao.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTm92YVRyYW5zYWNhby5yYXpvcg==
+[C:/Users/User/Desktop/Projetos-treinamento/projetos/ContaComigo/ContaComigo.Client/Components/Pages/Counter.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xDb3VudGVyLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/Desktop/Projetos-treinamento/projetos/ContaComigo/ContaComigo.Client/Shared/MainLayout.razor]
-build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE1haW5MYXlvdXQucmF6b3I=
+[C:/Users/User/Desktop/Projetos-treinamento/projetos/ContaComigo/ContaComigo.Client/Components/Pages/Home.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xIb21lLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/User/Desktop/Projetos-treinamento/projetos/ContaComigo/ContaComigo.Client/Components/Pages/Weather.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xXZWF0aGVyLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/User/Desktop/Projetos-treinamento/projetos/ContaComigo/ContaComigo.Client/_Imports.razor]
 build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/User/Desktop/Projetos-treinamento/projetos/ContaComigo/ContaComigo.Client/Components/Layout/MainLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcTWFpbkxheW91dC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = b-jypdq6k975
+
+[C:/Users/User/Desktop/Projetos-treinamento/projetos/ContaComigo/ContaComigo.Client/Components/Layout/NavMenu.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcTmF2TWVudS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = b-ommz6fltpn

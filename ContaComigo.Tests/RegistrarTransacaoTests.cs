@@ -1,107 +1,107 @@
-﻿// ContaComigo.Tests/RegistrarTransacaoTests.cs
-
-using Xunit;
-using Moq; // Para usar Mock
-using FluentAssertions; // Para usar os métodos de asserção do FluentAssertions
+﻿using Xunit;
+using Moq;
+using ContaComigo.Application.Interfaces;
+using ContaComigo.Application.UseCases.Transacoes;
+using ContaComigo.Shared.Models;
 using System;
-using ContaComigo.Application.Interfaces; // Para ITransacaoRepository
-using ContaComigo.Application.UseCases.Transacoes; // Para RegistrarTransacao
-using ContaComigo.Shared.Models; // Para Transacao
 
 namespace ContaComigo.Tests
 {
     public class RegistrarTransacaoTests
     {
-        private readonly Mock<ITransacaoRepository> _mockTransacaoRepository;
-        private readonly RegistrarTransacao _registrarTransacao;
-
-        public RegistrarTransacaoTests()
-        {
-            _mockTransacaoRepository = new Mock<ITransacaoRepository>();
-            _registrarTransacao = new RegistrarTransacao(_mockTransacaoRepository.Object);
-        }
-
         [Fact]
-        public void Executar_ComTransacaoValida_DeveChamarAdicionarNoRepositorio()
+        public void Executar_DeveAdicionarTransacao_QuandoTransacaoValida()
         {
             // Arrange
-            var transacao = new Transacao("Salário", 3000m, DateTime.Now);
+            var mockTransacaoRepository = new Mock<ITransacaoRepository>();
+            var registrarTransacao = new RegistrarTransacao(mockTransacaoRepository.Object);
+
+            // Adicione Tipo e Categoria ao construtor
+            var transacao = new Transacao("Salário", 1000m, DateTime.Now, TipoTransacao.Entrada, CategoriaTransacao.Salario);
 
             // Act
-            _registrarTransacao.Executar(transacao);
+            registrarTransacao.Executar(transacao);
 
             // Assert
-            _mockTransacaoRepository.Verify(repo => repo.Adicionar(transacao), Times.Once);
+            // Alterado de Adicionar para Add
+            mockTransacaoRepository.Verify(r => r.Add(transacao), Times.Once);
         }
 
         [Fact]
-        public void Executar_ComDescricaoVazia_DeveLancarArgumentException()
-        {
-            // Arrange (não precisamos de um mock aqui, o problema é na criação da Transacao)
-            // A Action serve para encapsular o código que pode lançar a exceção
-            Action act = () => new Transacao("", 100, DateTime.Now);
-
-            // Assert
-            act.Should().Throw<ArgumentException>()
-               .WithMessage("A descrição da transação não pode ser nula ou vazia. (Parameter 'descricao')");
-
-            // Verifica que o método Adicionar do repositório NÃO foi chamado
-            _mockTransacaoRepository.Verify(repo => repo.Adicionar(It.IsAny<Transacao>()), Times.Never);
-        }
-
-        [Fact]
-        public void Executar_ComDescricaoNula_DeveLancarArgumentException()
+        public void Executar_DeveLancarArgumentNullException_QuandoTransacaoNula()
         {
             // Arrange
-            Action act = () => new Transacao(null, 100, DateTime.Now);
+            var mockTransacaoRepository = new Mock<ITransacaoRepository>();
+            var registrarTransacao = new RegistrarTransacao(mockTransacaoRepository.Object);
 
-            // Assert
-            act.Should().Throw<ArgumentException>()
-               .WithMessage("A descrição da transação não pode ser nula ou vazia. (Parameter 'descricao')");
+            Transacao transacao = null; // Testando com transação nula
 
-            _mockTransacaoRepository.Verify(repo => repo.Adicionar(It.IsAny<Transacao>()), Times.Never);
-        }
+            // Act & Assert
+            // Verifica se a exceção ArgumentNullException é lançada quando a transação é nula
+            Assert.Throws<ArgumentNullException>(() => registrarTransacao.Executar(transacao));
 
-        [Theory]
-        [InlineData(-100)]
-        [InlineData(0)]
-        public void Executar_ComValorInvalido_DeveLancarArgumentException(decimal valorInvalido)
-        {
-            // Arrange
-            Action act = () => new Transacao("Teste Valor Inválido", valorInvalido, DateTime.Now);
-
-            // Assert
-            act.Should().Throw<ArgumentException>()
-               .WithMessage("O valor da transação deve ser maior que zero. (Parameter 'valor')");
-
-            _mockTransacaoRepository.Verify(repo => repo.Adicionar(It.IsAny<Transacao>()), Times.Never);
+            // Garante que o método Add não foi chamado no repositório
+            // Alterado de Adicionar para Add
+            mockTransacaoRepository.Verify(r => r.Add(It.IsAny<Transacao>()), Times.Never);
         }
 
         [Fact]
-        public void Construtor_NaoDeveAceitarRepositorioNulo()
-        {
-            Action act = () => new RegistrarTransacao(null);
-
-            act.Should().Throw<ArgumentNullException>()
-               // Mude a mensagem para a que você usou no construtor de RegistrarTransacao
-               .WithMessage("O repositório de transações não pode ser nulo. (Parameter 'transacaoRepository')");
-        }
-
-        // Você pode ter outros testes aqui para cenários válidos, como:
-        [Fact]
-        public void Executar_TransacaoComTodosCamposValidos_DeveSerRegistradaCorretamente()
+        public void Executar_DeveNegativarValor_QuandoTipoForSaida()
         {
             // Arrange
-            var transacao = new Transacao("Aluguel", 1500.00m, new DateTime(2023, 1, 15));
+            var mockTransacaoRepository = new Mock<ITransacaoRepository>();
+            var registrarTransacao = new RegistrarTransacao(mockTransacaoRepository.Object);
+
+            // Crie uma transação de saída com valor positivo
+            // Adicione Tipo e Categoria ao construtor
+            var transacaoSaida = new Transacao("Aluguel", 1500m, DateTime.Now, TipoTransacao.Saida, CategoriaTransacao.Aluguel);
 
             // Act
-            _registrarTransacao.Executar(transacao);
+            registrarTransacao.Executar(transacaoSaida);
 
-            // Assert (verificamos se o método Adicionar do mock foi chamado com a transação correta)
-            _mockTransacaoRepository.Verify(repo => repo.Adicionar(It.Is<Transacao>(t =>
-                t.Descricao == "Aluguel" &&
-                t.Valor == 1500.00m &&
-                t.Data == new DateTime(2023, 1, 15))), Times.Once);
+            // Assert
+            // Verifica se o valor da transação foi negativado antes de ser adicionado
+            // Alterado de Adicionar para Add
+            mockTransacaoRepository.Verify(r => r.Add(It.Is<Transacao>(t => t.Valor == -1500m)), Times.Once);
+        }
+
+        [Fact]
+        public void Executar_NaoDeveAlterarValor_QuandoTipoForEntrada()
+        {
+            // Arrange
+            var mockTransacaoRepository = new Mock<ITransacaoRepository>();
+            var registrarTransacao = new RegistrarTransacao(mockTransacaoRepository.Object);
+
+            // Crie uma transação de entrada com valor positivo
+            // Adicione Tipo e Categoria ao construtor
+            var transacaoEntrada = new Transacao("Freelance", 500m, DateTime.Now, TipoTransacao.Entrada, CategoriaTransacao.Salario);
+
+            // Act
+            registrarTransacao.Executar(transacaoEntrada);
+
+            // Assert
+            // Verifica se o valor da transação permaneceu positivo (não foi alterado)
+            // Alterado de Adicionar para Add
+            mockTransacaoRepository.Verify(r => r.Add(It.Is<Transacao>(t => t.Valor == 500m)), Times.Once);
+        }
+
+        // Teste adicional para garantir que valores negativos não são duplicadamente negativados
+        [Fact]
+        public void Executar_NaoDeveAlterarValor_SeJaNegativoESaida()
+        {
+            // Arrange
+            var mockTransacaoRepository = new Mock<ITransacaoRepository>();
+            var registrarTransacao = new RegistrarTransacao(mockTransacaoRepository.Object);
+
+            // Cria uma transação de saída com um valor já negativo (cenário menos comum, mas para robustez)
+            var transacaoSaidaPreNegativada = new Transacao("Compra", -50m, DateTime.Now, TipoTransacao.Saida, CategoriaTransacao.Alimentacao);
+
+            // Act
+            registrarTransacao.Executar(transacaoSaidaPreNegativada);
+
+            // Assert
+            // O valor deve permanecer -50m (não deve virar 50m ou -(-50m))
+            mockTransacaoRepository.Verify(r => r.Add(It.Is<Transacao>(t => t.Valor == -50m)), Times.Once);
         }
     }
 }

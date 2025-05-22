@@ -1,8 +1,8 @@
 ﻿@page "/"
-@using ContaComigo.Shared.Models
-@inject HttpClient Http
-@using System.Linq
-@using System.Globalization // Necessário para CultureInfo
+@using ContaComigo.Shared.Models 
+@inject HttpClient Http 
+@using System.Linq 
+@using System.Globalization
 
 <PageTitle>Home</PageTitle>
 
@@ -42,27 +42,29 @@ else
 <h2 class="mt-4">Registrar Nova Transação</h2>
 
 <div class="card p-3">
+    @* Adicionando FormName="transacaoForm" para resolver o erro de submissão do formulário *@
     <EditForm Model="@novaTransacao" OnValidSubmit="@HandleValidSubmit" FormName="transacaoForm">
         <DataAnnotationsValidator />
         <ValidationSummary />
 
         <div class="mb-3">
             <label for="descricao" class="form-label">Descrição:</label>
-            <InputText id="descricao" class="form-control" @bind-Value="novaTransacao.Descricao" />
+            @* Usando @bind-Value e @oninput para forçar a atualização **********************************************************************************************************************************************************************************************@
+            <InputText id="descricao" class="form-control" @bind-Value="novaTransacao.Descricao" @oninput="@((e) => OnDescricaoInput(e.Value?.ToString() ?? string.Empty))" />
             <ValidationMessage For="@(() => novaTransacao.Descricao)" />
         </div>
 
         <div class="mb-3">
             <label for="valor" class="form-label">Valor:</label>
-            @* Alterado para InputText para maior controle sobre a cultura *@
-            <InputText id="valor" class="form-control" @bind-Value="valorString" />
+            @* Usando InputNumber com CultureInfo.InvariantCulture *@
+            <InputNumber id="valor" class="form-control" @bind-Value="novaTransacao.Valor" Culture="System.Globalization.CultureInfo.InvariantCulture" />
             <ValidationMessage For="@(() => novaTransacao.Valor)" />
         </div>
 
         <div class="mb-3">
             <label for="data" class="form-label">Data:</label>
-            @* Alterado para InputText para maior controle sobre a cultura *@
-            <InputText id="data" class="form-control" @bind-Value="dataString" placeholder="DD/MM/AAAA" />
+            @* Usando InputDate *@
+            <InputDate id="data" class="form-control" @bind-Value="novaTransacao.Data" />
             <ValidationMessage For="@(() => novaTransacao.Data)" />
         </div>
 
@@ -73,14 +75,23 @@ else
 
 @code {
     private List<Transacao>? transacoes;
-    private Transacao novaTransacao = new Transacao();
+    private Transacao novaTransacao = new Transacao(); 
 
-    // Propriedades auxiliares para InputText
-    private string valorString { get; set; } = "0.00"; // Inicializa com valor padrão
-    private string dataString { get; set; } = DateTime.Now.ToString("dd/MM/yyyy"); // Inicializa com data atual formatada
+    // Método para tratar a entrada da descrição
+    private void OnDescricaoInput(string value)
+    {
+        novaTransacao.Descricao = value;
+        // Força a re-renderização e reavaliação da validação para o campo Descrição.
+        // Isso pode ser a chave para resolver o problema de validação em tempo real.
+        StateHasChanged(); 
+        Console.WriteLine($"DEBUG: Descrição atualizada para '{novaTransacao.Descricao}'");
+    }
 
     protected override async Task OnInitializedAsync()
     {
+        // A configuração da cultura agora está no Program.cs do cliente para ser global.
+        Console.WriteLine("DEBUG: Cultura definida para en-US (agora via Program.cs).");
+
         await CarregarTransacoes();
     }
 
@@ -89,38 +100,21 @@ else
         try
         {
             transacoes = await Http.GetFromJsonAsync<List<Transacao>>("api/transacoes");
+            Console.WriteLine($"DEBUG: Transações carregadas. Total: {transacoes?.Count ?? 0}");
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Erro ao carregar transações: {ex.Message}");
-            transacoes = new List<Transacao>();
+            Console.WriteLine($"DEBUG: Erro ao carregar transações: {ex.Message}");
+            transacoes = new List<Transacao>(); 
         }
     }
 
     private async Task HandleValidSubmit()
     {
-        // **IMPORTANTE:** Converter string para decimal e DateTime ANTES de enviar
-        if (decimal.TryParse(valorString, NumberStyles.Currency, CultureInfo.InvariantCulture, out decimal parsedValor))
-        {
-            novaTransacao.Valor = parsedValor;
-        }
-        else
-        {
-            // Se a conversão falhar, adicione um erro de validação manual
-            // Ou exiba uma mensagem de erro para o usuário
-            Console.WriteLine($"Erro de conversão: Valor '{valorString}' não é um número válido.");
-            return; // Impede a submissão se o valor for inválido
-        }
-
-        if (DateTime.TryParseExact(dataString, "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime parsedData))
-        {
-            novaTransacao.Data = parsedData;
-        }
-        else
-        {
-            Console.WriteLine($"Erro de conversão: Data '{dataString}' não está no formato DD/MM/AAAA.");
-            return; // Impede a submissão se a data for inválida
-        }
+        // Se o depurador não parar aqui, é porque o formulário ainda não é considerado válido.
+        Console.WriteLine($"DEBUG: HandleValidSubmit chamado. Descrição: '{novaTransacao.Descricao}'");
+        Console.WriteLine($"DEBUG: Valor: '{novaTransacao.Valor}'");
+        Console.WriteLine($"DEBUG: Data: '{novaTransacao.Data}'");
 
         try
         {
@@ -129,21 +123,18 @@ else
             if (response.IsSuccessStatusCode)
             {
                 await CarregarTransacoes();
-                // Resetar o modelo e as strings auxiliares para um novo formulário
-                novaTransacao = new Transacao();
-                valorString = "0.00";
-                dataString = DateTime.Now.ToString("dd/MM/yyyy");
-                Console.WriteLine("Transação adicionada com sucesso!");
+                novaTransacao = new Transacao(); 
+                Console.WriteLine("DEBUG: Transação adicionada com sucesso!");
             }
             else
             {
                 var errorContent = await response.Content.ReadAsStringAsync();
-                Console.WriteLine($"Erro ao adicionar transação: {response.StatusCode} - {errorContent}");
+                Console.WriteLine($"DEBUG: Erro ao adicionar transação: {response.StatusCode} - {errorContent}");
             }
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Erro inesperado ao enviar transação: {ex.Message}");
+            Console.WriteLine($"DEBUG: Erro inesperado ao enviar transação: {ex.Message}");
         }
     }
 }

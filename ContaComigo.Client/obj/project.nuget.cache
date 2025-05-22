@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "fzOz5dxGtN8=",
+  "dgSpecHash": "UlhpW7LvpLA=",
   "success": true,
   "projectFilePath": "C:\\Users\\User\\Desktop\\Projetos-treinamento\\projetos\\ContaComigo\\ContaComigo.Client\\ContaComigo.Client.csproj",
   "expectedPackageFiles": [
@@ -10,6 +10,7 @@
     "C:\\Users\\User\\.nuget\\packages\\microsoft.aspnetcore.components.forms\\8.0.15\\microsoft.aspnetcore.components.forms.8.0.15.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\packages\\microsoft.aspnetcore.components.web\\8.0.15\\microsoft.aspnetcore.components.web.8.0.15.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\packages\\microsoft.aspnetcore.components.webassembly\\8.0.15\\microsoft.aspnetcore.components.webassembly.8.0.15.nupkg.sha512",
+    "C:\\Users\\User\\.nuget\\packages\\microsoft.aspnetcore.components.webassembly.devserver\\8.0.15\\microsoft.aspnetcore.components.webassembly.devserver.8.0.15.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\packages\\microsoft.aspnetcore.metadata\\8.0.15\\microsoft.aspnetcore.metadata.8.0.15.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\packages\\microsoft.extensions.configuration\\8.0.0\\microsoft.extensions.configuration.8.0.0.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\8.0.0\\microsoft.extensions.configuration.abstractions.8.0.0.nupkg.sha512",
