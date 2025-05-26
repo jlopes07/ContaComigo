@@ -2,12 +2,11 @@
 using System;
 using System.Collections.Generic;
 
-namespace ContaComigo.Application.Interfaces
+namespace ContaComigo.Application.Interfaces;
+
+public interface ITransacaoRepository
 {
-    public interface ITransacaoRepository
-    {
-        IEnumerable<Transacao> GetAll(); // Mudado de 'ObterTodas' para 'GetAll'
-        void Add(Transacao transacao);   // Mudado de 'Adicionar' para 'Add'
-        Transacao? GetById(Guid id);     // Mudado para retornar Transacao? (anulável)
-    }
+    IEnumerable<Transacao> GetAll(); // Mudado de 'ObterTodas' para 'GetAll'
+    void Add(Transacao transacao);   // Mudado de 'Adicionar' para 'Add'
+    Transacao? GetById(Guid id);     // Mudado para retornar Transacao? (anulável)
 }

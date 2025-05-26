@@ -3,14 +3,124 @@
 @inject HttpClient Http
 @using System.Linq
 @using System.Globalization
+@using Microsoft.AspNetCore.Components.Forms
 
 <PageTitle>Home</PageTitle>
 
 <h1>Minhas Transações</h1>
 
-@* Exibição do Saldo Total *@
-<div class="alert alert-info">
+<h2 class="mt-4">Registrar Nova Transação</h2>
+
+<div class="card p-3 mb-4">
+    <EditForm Model="@novaTransacao" OnValidSubmit="@HandleValidSubmit" FormName="transacaoForm">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <div class="mb-3">
+            <label for="descricao" class="form-label">Descrição:</label>
+            <InputText id="descricao" class="form-control" @bind-Value="novaTransacao.Descricao" @oninput="@((e) => OnDescricaoInput(e.Value?.ToString() ?? string.Empty))" />
+            <ValidationMessage For="@(() => novaTransacao.Descricao)" />
+        </div>
+
+        <div class="mb-3">
+            <label for="valor" class="form-label">Valor:</label>
+            <InputNumber id="valor" class="form-control" @bind-Value="novaTransacao.Valor" Culture="System.Globalization.CultureInfo.InvariantCulture" />
+            <ValidationMessage For="@(() => novaTransacao.Valor)" />
+        </div>
+
+        <div class="mb-3">
+            <label for="data" class="form-label">Data:</label>
+            <InputDate id="data" class="form-control" @bind-Value="novaTransacao.Data" />
+            <ValidationMessage For="@(() => novaTransacao.Data)" />
+        </div>
+
+        <div class="mb-3">
+            <label for="tipo" class="form-label">Tipo:</label>
+            <InputSelect id="tipo" class="form-control" @bind-Value="novaTransacao.Tipo">
+                <option value="">Selecione o Tipo</option>
+                @foreach (var tipo in Enum.GetValues<TipoTransacao>())
+                {
+                    <option value="@tipo">@tipo.ToString()</option>
+                }
+            </InputSelect>
+            <ValidationMessage For="@(() => novaTransacao.Tipo)" />
+        </div>
+
+        <div class="mb-3">
+            <label for="categoria" class="form-label">Categoria:</label>
+            <InputSelect id="categoria" class="form-control" @bind-Value="novaTransacao.Categoria">
+                <option value="">Todas as Categorias</option>
+                @foreach (var categoria in Enum.GetValues<CategoriaTransacao>())
+                {
+                    <option value="@categoria">@categoria.ToString()</option>
+                }
+            </InputSelect>
+            <ValidationMessage For="@(() => novaTransacao.Categoria)" />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Registrar Transação</button>
+    </EditForm>
+</div>
+
+<div class="alert alert-info mt-4">
     <h4>Saldo Total: **@saldoTotal.ToString("C", new CultureInfo("pt-BR"))**</h4>
+</div>
+
+<h3>Histórico de Transações</h3>
+
+<div class="card p-3 mb-4">
+    <h5>Filtros</h5>
+    <div class="row g-3">
+        <div class="col-md-4">
+            <label for="filterTipo" class="form-label">Filtrar por Tipo:</label>
+            <InputSelect id="filterTipo" class="form-control" @bind-Value="filterTipo">
+                <option value="">Todos os Tipos</option>
+                @foreach (var tipo in Enum.GetValues<TipoTransacao>())
+                {
+                    <option value="@tipo">@tipo.ToString()</option>
+                }
+            </InputSelect>
+        </div>
+        <div class="col-md-4">
+            <label for="filterCategoria" class="form-label">Filtrar por Categoria:</label>
+            <InputSelect id="filterCategoria" class="form-control" @bind-Value="filterCategoria">
+                <option value="">Todas as Categorias</option>
+                @foreach (var categoria in Enum.GetValues<CategoriaTransacao>())
+                {
+                    <option value="@categoria">@categoria.ToString()</option>
+                }
+            </InputSelect>
+        </div>
+        <div class="col-md-4">
+            <label for="filterPeriodo" class="form-label">Filtrar por Período:</label>
+            <InputSelect id="filterPeriodo" class="form-control" @bind-Value="filterPeriodo" @onchange="OnPeriodoChange">
+                <option value="todos">Todos os Períodos</option>
+                <option value="dia">Hoje</option>
+                <option value="semana">Últimos 7 dias</option>
+                <option value="mes">Últimos 30 dias</option>
+                <option value="personalizado">Período Personalizado</option>
+            </InputSelect>
+        </div>
+    </div>
+
+    @if (filterPeriodo == "personalizado")
+    {
+        <div class="row g-3 mt-3">
+            <div class="col-md-6">
+                <label for="filterDataInicio" class="form-label">Data Início:</label>
+                <InputDate id="filterDataInicio" class="form-control" @bind-Value="filterDataInicio" />
+            </div>
+            <div class="col-md-6">
+                <label for="filterDataFim" class="form-label">Data Fim:</label>
+                <InputDate id="filterDataFim" class="form-control" @bind-Value="filterDataFim" />
+            </div>
+        </div>
+    }
+
+    <div class="mt-4">
+        <button class="btn btn-primary me-2" @onclick="AplicarFiltros">Aplicar Filtros</button>
+        <button class="btn btn-outline-secondary" @onclick="LimparFiltros">Limpar Filtros</button>
+    </div>
 </div>
 
 @if (transacoes == null)
@@ -19,7 +129,7 @@
 }
 else if (!transacoes.Any())
 {
-    <p>Nenhuma transação encontrada.</p>
+    <p>Nenhuma transação encontrada com os filtros aplicados.</p>
 }
 else
 {
@@ -48,120 +158,98 @@ else
     </table>
 }
 
-<h2 class="mt-4">Registrar Nova Transação</h2>
-
-<div class="card p-3">
-    <EditForm Model="@novaTransacao" OnValidSubmit="@HandleValidSubmit" FormName="transacaoForm">
-        <DataAnnotationsValidator />
-        <ValidationSummary />
-
-        <div class="mb-3">
-            <label for="descricao" class="form-label">Descrição:</label>
-            <InputText id="descricao" class="form-control" @bind-Value="novaTransacao.Descricao" @oninput="@((e) => OnDescricaoInput(e.Value?.ToString() ?? string.Empty))" />
-            <ValidationMessage For="@(() => novaTransacao.Descricao)" />
-        </div>
-
-        <div class="mb-3">
-            <label for="valor" class="form-label">Valor:</label>
-            <InputNumber id="valor" class="form-control" @bind-Value="novaTransacao.Valor" Culture="System.Globalization.CultureInfo.InvariantCulture" />
-            <ValidationMessage For="@(() => novaTransacao.Valor)" />
-        </div>
-
-        <div class="mb-3">
-            <label for="data" class="form-label">Data:</label>
-            <InputDate id="data" class="form-control" @bind-Value="novaTransacao.Data" />
-            <ValidationMessage For="@(() => novaTransacao.Data)" />
-        </div>
-
-        @* Campo para o Tipo de Transação *@
-        <div class="mb-3">
-            <label for="tipo" class="form-label">Tipo:</label>
-            <InputSelect id="tipo" class="form-control" @bind-Value="novaTransacao.Tipo">
-                <option value="">Selecione o Tipo</option>
-                @foreach (var tipo in Enum.GetValues<TipoTransacao>())
-                {
-                    <option value="@tipo">@tipo.ToString()</option>
-                }
-            </InputSelect>
-            <ValidationMessage For="@(() => novaTransacao.Tipo)" />
-        </div>
-
-        @* Campo para a Categoria da Transação *@
-        <div class="mb-3">
-            <label for="categoria" class="form-label">Categoria:</label>
-            <InputSelect id="categoria" class="form-control" @bind-Value="novaTransacao.Categoria">
-                <option value="">Selecione a Categoria</option>
-                @foreach (var categoria in Enum.GetValues<CategoriaTransacao>())
-                {
-                    <option value="@categoria">@categoria.ToString()</option>
-                }
-            </InputSelect>
-            <ValidationMessage For="@(() => novaTransacao.Categoria)" />
-        </div>
-
-        <button type="submit" class="btn btn-primary">Registrar Transação</button>
-    </EditForm>
-</div>
-
-
 @code {
     private List<Transacao>? transacoes;
     private Transacao novaTransacao = new Transacao();
-    private decimal saldoTotal; // Propriedade para armazenar e exibir o saldo
+    private decimal saldoTotal;
+
+    private TipoTransacao? filterTipo;
+    private CategoriaTransacao? filterCategoria;
+    private string filterPeriodo = "todos";
+    private DateTime? filterDataInicio;
+    private DateTime? filterDataFim;
 
     private void OnDescricaoInput(string value)
     {
         novaTransacao.Descricao = value;
         StateHasChanged();
-        Console.WriteLine($"DEBUG: Descrição atualizada para '{novaTransacao.Descricao}'");
+        Console.WriteLine($"DEBUG (Home.razor): Descrição atualizada para '{novaTransacao.Descricao}'");
     }
 
     protected override async Task OnInitializedAsync()
     {
-        Console.WriteLine("DEBUG: Carregando transações e saldo ao inicializar o componente.");
-        await CarregarDados(); // Chama o método que carrega ambos
+        Console.WriteLine("DEBUG (Home.razor): Carregando transações e saldo ao inicializar o componente.");
+        await CarregarDados();
     }
 
-    // Novo método para orquestrar o carregamento de transações e saldo
     private async Task CarregarDados()
     {
-        await CarregarTransacoes();
+        await CarregarTransacoes(filterTipo, filterCategoria, filterDataInicio, filterDataFim);
         await CarregarSaldoTotal();
-        StateHasChanged(); // Força a UI a atualizar após carregar ambos
+        StateHasChanged();
     }
 
-    private async Task CarregarTransacoes()
+    private async Task CarregarTransacoes(TipoTransacao? tipo = null, CategoriaTransacao? categoria = null, DateTime? dataInicio = null, DateTime? dataFim = null)
     {
         try
         {
-            transacoes = await Http.GetFromJsonAsync<List<Transacao>>("api/transacoes");
-            Console.WriteLine($"DEBUG: Transações carregadas. Total: {transacoes?.Count ?? 0}");
+            var queryParams = new List<string>();
+
+            if (tipo.HasValue)
+            {
+                queryParams.Add($"Tipo={(int)tipo.Value}");
+            }
+            if (categoria.HasValue)
+            {
+                queryParams.Add($"Categoria={(int)categoria.Value}");
+            }
+            if (dataInicio.HasValue)
+            {
+                string formattedDate = dataInicio.Value.ToString("yyyy-MM-dd");
+                queryParams.Add($"DataInicio={formattedDate}");
+                Console.WriteLine($"DEBUG (Home.razor - QueryParam): DataInicio na URL = {formattedDate}");
+            }
+            if (dataFim.HasValue)
+            {
+                string formattedDate = dataFim.Value.ToString("yyyy-MM-dd");
+                queryParams.Add($"DataFim={formattedDate}");
+                Console.WriteLine($"DEBUG (Home.razor - QueryParam): DataFim na URL = {formattedDate}");
+            }
+
+            var url = "api/transacoes";
+            if (queryParams.Any())
+            {
+                url += "?" + string.Join("&", queryParams);
+            }
+
+            Console.WriteLine($"DEBUG (Home.razor): URL final da API chamada: {url}");
+            transacoes = await Http.GetFromJsonAsync<List<Transacao>>(url);
+            Console.WriteLine($"DEBUG (Home.razor): Transações carregadas. Total: {transacoes?.Count ?? 0}");
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"DEBUG: Erro ao carregar transações: {ex.Message}");
-            transacoes = new List<Transacao>(); // Garante que a lista não é nula
+            Console.WriteLine($"DEBUG (Home.razor): Erro ao carregar transações: {ex.Message}");
+            transacoes = new List<Transacao>();
         }
     }
 
-    // Novo método para carregar o saldo total
     private async Task CarregarSaldoTotal()
     {
         try
         {
             saldoTotal = await Http.GetFromJsonAsync<decimal>("api/transacoes/saldo");
-            Console.WriteLine($"DEBUG: Saldo total carregado: {saldoTotal.ToString("C")}");
+            Console.WriteLine($"DEBUG (Home.razor): Saldo total carregado: {saldoTotal.ToString("C")}");
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"DEBUG: Erro ao carregar saldo: {ex.Message}");
-            saldoTotal = 0.00m; // Define como 0.00 em caso de erro
+            Console.WriteLine($"DEBUG (Home.razor): Erro ao carregar saldo: {ex.Message}");
+            saldoTotal = 0.00m;
         }
     }
 
     private async Task HandleValidSubmit()
     {
-        Console.WriteLine($"DEBUG: HandleValidSubmit chamado. Tentando registrar transação: {novaTransacao.Descricao}, {novaTransacao.Valor}, {novaTransacao.Data}, {novaTransacao.Tipo}, {novaTransacao.Categoria}");
+        Console.WriteLine($"DEBUG (Home.razor): HandleValidSubmit chamado. Tentando registrar transação: {novaTransacao.Descricao}, {novaTransacao.Valor}, {novaTransacao.Data}, {novaTransacao.Tipo}, {novaTransacao.Categoria}");
 
         try
         {
@@ -178,20 +266,93 @@ else
 
             if (response.IsSuccessStatusCode)
             {
-                Console.WriteLine("DEBUG: Transação adicionada com sucesso na API!");
-                await CarregarDados(); // Recarrega transações e saldo após adicionar uma nova
-                novaTransacao = new Transacao(); // Reseta o formulário
+                Console.WriteLine("DEBUG (Home.razor): Transação adicionada com sucesso na API!");
+                novaTransacao = new Transacao();
+                await CarregarDados();
             }
             else
             {
                 var errorContent = await response.Content.ReadAsStringAsync();
-                Console.WriteLine($"DEBUG: Erro ao adicionar transação na API: {response.StatusCode} - {errorContent}");
+                Console.WriteLine($"DEBUG (Home.razor): Erro ao adicionar transação na API: {response.StatusCode} - {errorContent}");
             }
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"DEBUG: Erro inesperado ao enviar transação para a API: {ex.Message}");
+            Console.WriteLine($"DEBUG (Home.razor): Erro inesperado ao enviar transação para a API: {ex.Message}");
         }
-        StateHasChanged(); // Força a UI a atualizar
+        StateHasChanged();
+    }
+
+    private async Task AplicarFiltros()
+    {
+        // ***** AQUI ESTÁ A ÚNICA MUDANÇA PARA ESTA ITERAÇÃO *****
+        // REMOVA A CHAMADA PARA AjustarDatasPorPeriodo() AQUI!
+        // Ela não é necessária quando o período é "personalizado",
+        // pois os InputDate já atualizam as variáveis.
+        // Se você tiver períodos como "hoje", "semana", "mês", a chamada ainda estará
+        // no OnPeriodoChange, que é o lugar correto.
+        // AjustarDatasPorPeriodo(); // <-- REMOVER ESTA LINHA
+
+        Console.WriteLine($"DEBUG (Home.razor - AplicarFiltros): filterDataInicio (antes de CarregarTransacoes): {filterDataInicio?.ToString("yyyy-MM-dd HH:mm:ss.fff") ?? "NULO"}");
+        Console.WriteLine($"DEBUG (Home.razor - AplicarFiltros): filterDataFim (antes de CarregarTransacoes): {filterDataFim?.ToString("yyyy-MM-dd HH:mm:ss.fff") ?? "NULO"}");
+
+        await CarregarTransacoes(filterTipo, filterCategoria, filterDataInicio, filterDataFim);
+        StateHasChanged();
+    }
+
+    private async Task LimparFiltros()
+    {
+        filterTipo = null;
+        filterCategoria = null;
+        filterPeriodo = "todos";
+        filterDataInicio = null;
+        filterDataFim = null;
+        Console.WriteLine("DEBUG (Home.razor): Filtros limpos.");
+        await CarregarTransacoes();
+        StateHasChanged();
+    }
+
+    private void OnPeriodoChange(ChangeEventArgs e)
+    {
+        filterPeriodo = e.Value?.ToString() ?? "todos";
+        // Esta chamada AQUI está correta, pois é o momento em que o período é selecionado
+        // e as datas pré-definidas (dia, semana, mês) precisam ser ajustadas.
+        AjustarDatasPorPeriodo();
+        StateHasChanged();
+    }
+
+    private void AjustarDatasPorPeriodo()
+    {
+        // Sempre limpa as datas antes de ajustá-las, exceto para o modo "personalizado"
+        // onde os InputDate bindings serão responsáveis por definir.
+        filterDataInicio = null;
+        filterDataFim = null;
+
+        var today = DateTime.Today;
+
+        switch (filterPeriodo)
+        {
+            case "dia":
+                filterDataInicio = today;
+                filterDataFim = today;
+                break;
+            case "semana":
+                filterDataInicio = today.AddDays(-6);
+                filterDataFim = today;
+                break;
+            case "mes":
+                filterDataInicio = today.AddDays(-29);
+                filterDataFim = today;
+                break;
+            case "personalizado":
+                // NÃO FAÇA NADA AQUI.
+                // O InputDate já atualiza diretamente filterDataInicio e filterDataFim.
+                // Se fizer algo aqui, pode sobrescrever o que o usuário digitou.
+                break;
+            case "todos":
+            default:
+                break;
+        }
+        Console.WriteLine($"DEBUG (Home.razor - AjustarDatasPorPeriodo): Período '{filterPeriodo}' ajustado. DataInicio: {filterDataInicio?.ToShortDateString() ?? "NULO"}, DataFim: {filterDataFim?.ToShortDateString() ?? "NULO"}");
     }
 }
