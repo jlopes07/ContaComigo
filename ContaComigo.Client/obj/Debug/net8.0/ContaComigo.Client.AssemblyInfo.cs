@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ContaComigo.Client")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c107f4769ab0377e8daf4447932650917c65c15b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d68b317cb222ac94d47fca00ea667da0aca30bd4")]
 [assembly: System.Reflection.AssemblyProductAttribute("ContaComigo.Client")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ContaComigo.Client")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

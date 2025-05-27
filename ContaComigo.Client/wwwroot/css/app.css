@@ -1,5 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Krona+One&family=Montserrat:wght@400;600&display=swap');
+
+:root {
+    --fonte-primaria: 'Krona One', sans-serif;
+    --fonte-secundaria: 'Montserrat', sans-serif;
+}
+
 html, body {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: var(--fonte-secundaria);
+}
+
+h1 {
+    font-family: var(--fonte-primaria);
+    font-size: 2.5rem;
+}
+
+h2 {
+    font-family: var(--fonte-primaria);
+}
+
+h3 {
+    font-family: var(--fonte-primaria);
 }
 
 h1:focus {
@@ -7,17 +27,47 @@ h1:focus {
 }
 
 a, .btn-link {
-    color: #0071c1;
+    color: #2d702b;
 }
 
 .btn-primary {
     color: #fff;
-    background-color: #1b6ec2;
-    border-color: #1861ac;
+    background-color: #2d702b;
+    border-color: #135c1d;
+}
+
+.btn-primary:hover {
+    color: #fff;
+    background-color: #243827;
+    border-color: #131c14;
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #2df747;
+}
+
+/* Seu código CSS existente acima */
+
+.btn-delete-custom {
+    background-color: #dc3545; /* Vermelho padrão do Bootstrap para perigo */
+    color: white;
+    border: none;
+    padding: 0.3rem 0.6rem;
+    font-size: 0.8rem;
+    cursor: pointer;
+    border-radius: 0.25rem;
+    line-height: 1; 
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-delete-custom:hover {
+    background-color: #c82333; 
+}
+
+.btn-delete-custom:focus {
+    box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.5);
 }
 
 .content {
@@ -82,7 +132,7 @@ a, .btn-link {
     }
 
         .loading-progress circle:last-child {
-            stroke: #1b6ec2;
+            stroke: #2d702b;
             stroke-dasharray: calc(3.141 * var(--blazor-load-percentage, 0%) * 0.8), 500%;
             transition: stroke-dasharray 0.05s ease-in-out;
         }

@@ -8,57 +8,92 @@ using ContaComigo.Application.UseCases.Transacoes;
 using ContaComigo.Application.Interfaces;
 using ContaComigo.Infrastructure.Repositories;
 
-var builder = WebApplication.CreateBuilder(args);
+namespace ContaComigo;
 
-// Adiciona serviços ao contêiner.
-builder.Services.AddControllersWithViews(); // Necessário para seus controladores de API
-builder.Services.AddRazorPages(); // Necessário para o fallback do Blazor e se tiver Razor Pages
-
-// **Registro dos seus Use Cases e Repositórios**
-// Estes são os serviços que seus controladores usarão.
-builder.Services.AddScoped<RegistrarTransacao>();
-builder.Services.AddScoped<ObterTodasTransacoes>();
-builder.Services.AddScoped<ObterSaldoTotal>(); // Registro do novo Use Case para o saldo
-
-// **CRÍTICO:** Registro da implementação do repositório.
-// ITransacaoRepository (interface) está em ContaComigo.Application.Interfaces
-// InMemoryTransacaoRepository (implementação) está em ContaComigo.Infrastructure.Repositories
-builder.Services.AddSingleton<ITransacaoRepository, InMemoryTransacaoRepository>();
-
-// Adiciona o HttpClient para a API (se o servidor for fazer chamadas para outras APIs)
-builder.Services.AddHttpClient();
-
-
-// Adiciona Swagger/OpenAPI para documentação da API (opcional, se você quiser testar os endpoints da API separadamente)
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-var app = builder.Build();
-
-// Configura o pipeline de solicitação HTTP.
-if (app.Environment.IsDevelopment())
+public class Program 
 {
-    app.UseWebAssemblyDebugging(); // Habilita a depuração do cliente Blazor
-    app.UseSwagger(); // Para usar a interface do Swagger
-    app.UseSwaggerUI(); // Para a UI do Swagger
-}
-else
-{
-    app.UseExceptionHandler("/Error");
-    app.UseHsts();
+    public static void Main(string[] args)
+    {
+        CreateHostBuilder(args).Build().Run();
+    }
+
+    public static IHostBuilder CreateHostBuilder(string[] args) =>
+        Host.CreateDefaultBuilder(args)
+            .ConfigureWebHostDefaults(webBuilder =>
+            {
+                webBuilder.UseStartup<Startup>(); // <--- Usaremos a classe Startup
+            });
 }
 
-app.UseHttpsRedirection();
-app.UseBlazorFrameworkFiles(); // Serve os arquivos do framework Blazor WebAssembly
-app.UseStaticFiles(); // Serve arquivos estáticos do wwwroot
+// Nova classe Startup para configurar serviços e pipeline
+public class Startup
+{
+    public IConfiguration Configuration { get; }
 
-app.UseRouting(); // Habilita o roteamento
+    public Startup(IConfiguration configuration)
+    {
+        Configuration = configuration;
+    }
 
-// Mapeia os endpoints dos controladores (suas APIs)
-app.MapControllers();
-app.MapRazorPages(); // Para o fallback do Blazor e se tiver Razor Pages
+    // Este método configura os serviços da sua aplicação
+    public void ConfigureServices(IServiceCollection services)
+    {
+        // Adiciona serviços ao contêiner.
+        services.AddControllersWithViews(); // Necessário para seus controladores de API
+        services.AddRazorPages(); // Necessário para o fallback do Blazor e se tiver Razor Pages
 
-// CRÍTICO: Para rotas não encontradas no servidor, redireciona para o index.html do cliente Blazor.
-app.MapFallbackToFile("index.html");
+        // **Registro dos seus Use Cases e Repositórios**
+        // Estes são os serviços que seus controladores usarão.
+        services.AddScoped<RegistrarTransacao>();
+        services.AddScoped<ObterTodasTransacoes>();
+        services.AddScoped<ObterSaldoTotal>();
+        services.AddScoped<ExcluirTransacao>(); // NOVO: Registro do Use Case ExcluirTransacao
+        services.AddScoped<AtualizarTransacao>();
 
-app.Run();
+
+        // **CRÍTICO:** Registro da implementação do repositório.
+        // ITransacaoRepository (interface) está em ContaComigo.Application.Interfaces
+        // InMemoryTransacaoRepository (implementação) está em ContaComigo.Infrastructure.Repositories
+        services.AddSingleton<ITransacaoRepository, InMemoryTransacaoRepository>();
+
+        // Adiciona o HttpClient para a API (se o servidor for fazer chamadas para outras APIs)
+        services.AddHttpClient();
+
+        // Adiciona Swagger/OpenAPI para documentação da API
+        services.AddEndpointsApiExplorer();
+        services.AddSwaggerGen();
+    }
+
+    // Este método configura o pipeline de solicitação HTTP
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    {
+        if (env.IsDevelopment())
+        {
+            app.UseDeveloperExceptionPage();
+            app.UseWebAssemblyDebugging(); // Habilita a depuração do cliente Blazor
+            app.UseSwagger(); // Para usar a interface do Swagger
+            app.UseSwaggerUI(); // Para a UI do Swagger
+        }
+        else
+        {
+            app.UseExceptionHandler("/Error");
+            app.UseHsts();
+        }
+
+        app.UseHttpsRedirection();
+        app.UseBlazorFrameworkFiles(); // Serve os arquivos do framework Blazor WebAssembly
+        app.UseStaticFiles(); // Serve arquivos estáticos do wwwroot
+
+        app.UseRouting(); // Habilita o roteamento
+
+        app.UseEndpoints(endpoints =>
+        {
+            // Mapeia os endpoints dos controladores (suas APIs)
+            endpoints.MapControllers();
+            // Para o fallback do Blazor e se tiver Razor Pages
+            endpoints.MapRazorPages();
+            // CRÍTICO: Para rotas não encontradas no servidor, redireciona para o index.html do cliente Blazor.
+            endpoints.MapFallbackToFile("index.html");
+        });
+    }
+}
